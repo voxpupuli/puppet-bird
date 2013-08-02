@@ -13,8 +13,8 @@ include 'bird'
 ```
   class {
     'bird':
-      enable_v6 => true,
+      enable_v6       => true,
+      config_tmpl_v4  => 'arnldn/bird/bird.conf.erb',
+      config_tmpl_v6  => 'arnldn/bird/bird6.conf.erb',
   }
 ```
-
-## Other class parameters

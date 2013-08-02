@@ -12,11 +12,11 @@ import 'params.pp'
 #
 #
 class bird (
-  $package_name_v4 = $bird::params::package_name_v4,
-  $service_name_v4 = $bird::params::service_name_v4,
+  $daemon_name_v4  = $bird::params::daemon_name_v4,
+  $config_tmpl_v4  = 'UNSET',
   $enable_v6       = true,
-  $package_name_v6 = $bird::params::package_name_v6,
-  $service_name_v6 = $bird::params::service_name_v6,
+  $daemon_name_v6  = $bird::params::daemon_name_v6,
+  $config_tmpl_v6  = 'UNSET',
 ) inherits bird::params {
 
   package {
@@ -25,31 +25,57 @@ class bird (
   }
 
   service {
-    $service_name_v4:
+    $daemon_name_v4:
       ensure      => running,
       enable      => true,
       hasrestart  => true,
       hasstatus   => false,
-      pattern     => $service_name_v4,
-      require     => Package[$package_name_v4];
+      pattern     => $daemon_name_v4,
+      require     => Package[$daemon_name_v4];
   }
+
+  if $config_tmpl_v4 != 'UNSET' {
+    file {
+      '/etc/bird.conf':
+        ensure  => file,
+        content => template($config_tmpl_v4),
+        owner   => root,
+        group   => root,
+        mode    => '0644',
+        notify  => Service[$daemon_name_v4],
+        require => Package[$daemon_name_v4];
+    }
+  } # config_tmpl_v4
 
   if $enable_v6 {
 
     package {
-      $package_name_v6:
+      $daemon_name_v6:
         ensure => installed;
     }
 
     service {
-      $service_name_v6:
+      $daemon_name_v6:
         ensure      => running,
         enable      => true,
         hasrestart  => true,
         hasstatus   => false,
-        pattern     => $service_name_v6,
-        require     => Package[$package_name_v6];
+        pattern     => $daemon_name_v6,
+        require     => Package[$daemon_name_v6];
     }
+
+    if $config_tmpl_v6 != 'UNSET' {
+      file {
+        '/etc/bird6.conf':
+          ensure  => file,
+          content => template($config_tmpl_v6),
+          owner   => root,
+          group   => root,
+          mode    => '0644',
+          notify  => Service[$daemon_name_v6],
+          require => Package[$daemon_name_v6];
+      }
+    } # config_tmpl_v6
   } # enable_v6
 
 } # Class:: bird

@@ -12,10 +12,8 @@
 class bird::params {
   case $::operatingsystem {
     /(Debian|Ubuntu)/: {
-      $package_name_v4   = 'bird'
-      $service_name_v4   = 'bird'
-      $package_name_v6   = 'bird6'
-      $service_name_v6   = 'bird6'
+      $daemon_name_v4   = 'bird'
+      $daemon_name_v6   = 'bird6'
     }
     default: {
       fail("Unsupported operating system: ${::operatingsystem}")
