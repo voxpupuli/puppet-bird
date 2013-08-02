@@ -13,6 +13,7 @@ include 'bird'
 ```
   class {
     'bird':
+      enable_v6 => true,
   }
 ```
 
