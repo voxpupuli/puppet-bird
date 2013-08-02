@@ -20,7 +20,7 @@ class bird (
 ) inherits bird::params {
 
   package {
-    $package_name_v4:
+    $daemon_name_v4:
       ensure => installed;
   }
 
@@ -47,7 +47,7 @@ class bird (
     }
   } # config_tmpl_v4
 
-  if $enable_v6 {
+  if $enable_v6 == true {
 
     package {
       $daemon_name_v6:
