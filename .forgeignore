@@ -1,0 +1,7 @@
+- pkg/
+- spec/
+- Rakefile
+- .git/
+- .forgeignore
+- .travis.yml
+- .gitignore

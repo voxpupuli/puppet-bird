@@ -1,10 +1,13 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 #
-NAME = 'puppet-bird'
+NAME = 'sbadia-bird'
 TDIR = File.expand_path(File.dirname(__FILE__))
 
 require 'puppetlabs_spec_helper/rake_tasks'
+require 'puppet-lint/tasks/puppet-lint'
+
+PuppetLint.configuration.send('disable_80chars')
 
 def get_version
   if File.read(File.join(TDIR, 'Modulefile')) =~ /(\d+)\.(\d+)\.(\d+)/
@@ -82,6 +85,15 @@ namespace :check do
   task :syntax do
     file=ARGV.values_at(Range.new(ARGV.index('check:syntax')+1,-1))
     exec "puppet-lint \"#{file}\""
+  end
+
+end
+
+namespace :package do
+  desc "Build #{NAME} module (in a clean env) Please use this for puppetforge"
+  task :build do
+    exec "rsync -rv --exclude-from=#{TDIR}/.forgeignore . /tmp/#{NAME}"
+    exec "cd /tmp/#{NAME};puppet module build"
   end
 end
 
