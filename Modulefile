@@ -1,4 +1,4 @@
-name    'puppet-bird'
+name    'sbadia-bird'
 version '0.0.1'
 source  'https://github.com/sbadia/puppet-bird'
 author  'Sebastien Badia'
