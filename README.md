@@ -1,4 +1,4 @@
-# puppet-bird
+# Puppet-bird [![Build Status](https://travis-ci.org/sbadia/puppet-bird.png)](https://travis-ci.org/sbadia/puppet-bird)
 
 Manage [bird](http://bird.network.cz/) routing daemon via Puppet
 
