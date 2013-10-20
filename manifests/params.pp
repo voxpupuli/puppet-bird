@@ -10,13 +10,13 @@
 #
 #
 class bird::params {
-  case $::operatingsystem {
-    /(Debian|Ubuntu)/: {
+  case $::osfamily {
+    'Debian': {
       $daemon_name_v4   = 'bird'
       $daemon_name_v6   = 'bird6'
     }
     default: {
-      fail("Unsupported operating system: ${::operatingsystem}")
+      fail("Unsupported osfamily: ${::osfamily}")
     }
   } # Case $::operatingsystem
 } # Class:: bird::params
