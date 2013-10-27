@@ -2,19 +2,28 @@
 
 Manage [bird](http://bird.network.cz/) routing daemon via Puppet
 
+## Overview
+
+The BIRD Internet Routing Daemon
+
+The BIRD project aims to develop a fully functional dynamic IP routing daemon primarily targeted on (but not limited to) Linux, FreeBSD and other UNIX-like systems and distributed under the GNU General Public License. 
+
+Support: IPv4, IPv6, Multiple routing tables, BGP, RIP, OSPF, Static routes, IPv6 RA, Inter-table protocol
+
 ## Usage
 
-### Using default values
-```
-include 'bird'
-```
-
-### Overide values
-```
-  class {
-    'bird':
+    class { 'bird':
       enable_v6       => true,
-      config_tmpl_v4  => 'arnldn/bird/bird.conf.erb',
-      config_tmpl_v6  => 'arnldn/bird/bird6.conf.erb',
-  }
-```
+      config_file_v4  => 'puppet:///modules/bgp/ldn/bird.conf',
+      config_file_v6  => 'puppet:///modules/bgp/ldn/bird6.conf',
+    }
+
+## Parameters
+
+* `enable_v6`: Boolean, enable or disable IPv6 (install bird6 package).
+* `config_file_v4`: Location of IPv4 bird configuration.
+* `config_file_v6`: Location of IPv6 bird configuration.
+
+## Development
+
+[Feel free to contribute](https://github.com/sbadia/puppet-metche/). I'm not a big fan of centralized services like GitHub but I used it to permit easy pull-requests, so show me that's a good idea!
