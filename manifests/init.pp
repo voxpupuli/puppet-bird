@@ -1,22 +1,45 @@
-# Module:: bird
-# Manifest:: init.pp
+# == Class: bird
 #
-# Author:: Sebastien Badia (<seb@sebian.fr>)
-# Date:: 2013-08-02 17:52:35 +0200
-# Maintainer:: Sebastien Badia (<seb@sebian.fr>)
+# Install and configure bird
 #
-
+# === Parameters
+#
+# [*config_file_v4*]
+#  Bird configuration file for IPv4.
+#  Default: UNSET. (this value is a puppet source, example 'puppet:///modules/bgp/bird.conf').
+# [*enable_v6*]
+#   Boolean for enable IPv6 (install bird6 package)
+#   Default: true
+# [*config_file_v6*]
+#  Bird configuration file for IPv6.
+#  Default: UNSET. (this value is a puppet source, example 'puppet:///modules/bgp/bird6.conf').
+#
+# === Examples
+#
+#  class { 'bird':
+#    enable_v6       => true,
+#    config_file_v4  => 'puppet:///modules/bgp/ldn/bird.conf',
+#    config_file_v6  => 'puppet:///modules/bgp/ldn/bird6.conf',
+#  }
+#
+# === Authors
+#
+# Sebastien Badia <http://sebastien.badia.fr/>
+# Lorraine Data Network <http://ldn-fai.net/>
+#
+# === Copyright
+#
+# Copyleft 2013 Sebastien Badia
+# See LICENSE file
+#
 import 'params.pp'
-
-# Class:: bird
-#
 #
 class bird (
   $daemon_name_v4  = $bird::params::daemon_name_v4,
-  $config_tmpl_v4  = 'UNSET',
+  $config_file_v4  = 'UNSET',
   $enable_v6       = true,
   $daemon_name_v6  = $bird::params::daemon_name_v6,
-  $config_tmpl_v6  = 'UNSET',
+  $config_file_v6  = 'UNSET',
 ) inherits bird::params {
 
   package {
@@ -28,17 +51,20 @@ class bird (
     $daemon_name_v4:
       ensure      => running,
       enable      => true,
-      hasrestart  => true,
+      hasrestart  => false,
+      restart     => '/usr/sbin/birdc configure',
       hasstatus   => false,
       pattern     => $daemon_name_v4,
       require     => Package[$daemon_name_v4];
   }
 
-  if $config_tmpl_v4 != 'UNSET' {
+  if $config_file_v4 == 'UNSET' {
+    fail("config_file_v4 parameter must be set (value: ${config_file_v4})")
+  } else {
     file {
       '/etc/bird.conf':
         ensure  => file,
-        content => template($config_tmpl_v4),
+        source  => $config_file_v4,
         owner   => root,
         group   => root,
         mode    => '0644',
@@ -56,19 +82,22 @@ class bird (
 
     service {
       $daemon_name_v6:
-        ensure      => running,
-        enable      => true,
-        hasrestart  => true,
-        hasstatus   => false,
-        pattern     => $daemon_name_v6,
-        require     => Package[$daemon_name_v6];
+        ensure     => running,
+        enable     => true,
+        hasrestart => false,
+        restart    => '/usr/sbin/birdc6 configure',
+        hasstatus  => false,
+        pattern    => $daemon_name_v6,
+        require    => Package[$daemon_name_v6];
     }
 
-    if $config_tmpl_v6 != 'UNSET' {
+    if $config_file_v6 == 'UNSET' {
+      fail("config_file_v6 parameter must be set (value: ${config_file_v6})")
+    } else {
       file {
         '/etc/bird6.conf':
           ensure  => file,
-          content => template($config_tmpl_v6),
+          source  => $config_file_v6,
           owner   => root,
           group   => root,
           mode    => '0644',
