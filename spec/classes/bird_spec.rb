@@ -35,7 +35,7 @@ describe 'bird', :type => :class do
         :owner  => 'root',
         :group  => 'root',
         :mode   => '0644',
-        :notify => 'Service[bird]',
+        :notify => 'Service[bird]'
       )}
     end
 
@@ -61,7 +61,7 @@ describe 'bird', :type => :class do
         :owner  => 'root',
         :group  => 'root',
         :mode   => '0644',
-        :notify => 'Service[bird]',
+        :notify => 'Service[bird]'
       )}
 
       it { should contain_package('bird6') }
@@ -79,7 +79,7 @@ describe 'bird', :type => :class do
         :owner  => 'root',
         :group  => 'root',
         :mode   => '0644',
-        :notify => 'Service[bird6]',
+        :notify => 'Service[bird6]'
       )}
     end
 
