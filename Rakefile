@@ -37,13 +37,13 @@ def bump_version(level)
 
   new_version = [major,minor,patch].compact.join('.')
   v = File.read(File.join(TDIR,'Modulefile')).chomp
-  v.gsub!(/(\d+)\.(\d+)\.(\d+)/,"#{new_version}")
+  v.gsub!(/\w+\s'(\d+)\.(\d+)\.(\d+)'/,"version\ '#{new_version}'")
   File.open(File.join(TDIR,'Modulefile'), 'w') do |file|
     file.puts v
   end
 end # def:: bump_version(level)
 
-namespace :version do
+namespace :module do
   desc "New #{NAME} GIT release (v#{get_version})"
   task :release do
     sh "git tag #{get_version} -m \"New release: #{get_version}\""
@@ -66,36 +66,34 @@ namespace :version do
       bump_version(:patch)
     end
   end
-end
 
-namespace :check do
-  desc 'Check erb template syntax'
-  task :erb do
-    file=ARGV.values_at(Range.new(ARGV.index('check:erb')+1,-1))
-    exec "erb -x -T '-' #{file} | ruby -c"
+  namespace :check do
+    desc 'Check erb template syntax'
+    task :erb do
+      file=ARGV.values_at(Range.new(ARGV.index('check:erb')+1,-1))
+      exec "erb -x -T '-' #{file} | ruby -c"
+    end
+
+    desc "Check pp file syntax (return nothing if ok)"
+    task :pp do
+      file=ARGV.values_at(Range.new(ARGV.index('check:pp')+1,-1))
+      exec "puppet parser validate \"#{file}\""
+    end
+
+    desc "Check puppet syntax"
+    task :syntax do
+      file=ARGV.values_at(Range.new(ARGV.index('check:syntax')+1,-1))
+      exec "puppet-lint \"#{file}\""
+    end
   end
-
-  desc "Check pp file syntax (return nothing if ok)"
-  task :pp do
-    file=ARGV.values_at(Range.new(ARGV.index('check:pp')+1,-1))
-    exec "puppet parser validate \"#{file}\""
-  end
-
-  desc "Check puppet syntax"
-  task :syntax do
-    file=ARGV.values_at(Range.new(ARGV.index('check:syntax')+1,-1))
-    exec "puppet-lint \"#{file}\""
-  end
-
-end
-
-namespace :package do
-  desc "Build #{NAME} module (in a clean env) Please use this for puppetforge"
+  desc "Build #{NAME} module (in a clean env) :: Override default build module"
   task :build do
-    exec "rsync -rv --exclude-from=#{TDIR}/.forgeignore . /tmp/#{NAME}"
-    exec "cd /tmp/#{NAME};puppet module build"
+    exec "rsync -rv --exclude-from=#{TDIR}/.forgeignore . /tmp/#{NAME};cd /tmp/#{NAME};puppet module build"
   end
+
 end
+
+
 
 task(:default).clear
-task :default => :spec
+task :default => [:spec, :lint]

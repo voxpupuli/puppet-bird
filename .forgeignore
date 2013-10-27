@@ -5,3 +5,6 @@
 - .forgeignore
 - .travis.yml
 - .gitignore
+- .fixtures.yml
+- Gemfile
+- Gemfile.lock
