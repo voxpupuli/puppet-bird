@@ -1,5 +1,5 @@
 name    'sbadia-bird'
-version '0.0.2'
+version '0.0.3'
 source  'https://github.com/sbadia/puppet-bird'
 author  'Sebastien Badia'
 license 'GPLv3'
