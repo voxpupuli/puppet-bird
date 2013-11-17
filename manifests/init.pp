@@ -7,9 +7,15 @@
 # [*config_file_v4*]
 #  Bird configuration file for IPv4.
 #  Default: UNSET. (this value is a puppet source, example 'puppet:///modules/bgp/bird.conf').
+#
 # [*enable_v6*]
 #   Boolean for enable IPv6 (install bird6 package)
 #   Default: true
+#
+# [*manage_conf*]
+#   Boolean, global parameter to disable or enable mangagment of bird configuration files.
+#   Default: true
+#
 # [*config_file_v6*]
 #  Bird configuration file for IPv6.
 #  Default: UNSET. (this value is a puppet source, example 'puppet:///modules/bgp/bird6.conf').
@@ -38,6 +44,7 @@ class bird (
   $daemon_name_v4  = $bird::params::daemon_name_v4,
   $config_file_v4  = 'UNSET',
   $enable_v6       = true,
+  $manage_conf     = true,
   $daemon_name_v6  = $bird::params::daemon_name_v6,
   $config_file_v6  = 'UNSET',
 ) inherits bird::params {
@@ -58,20 +65,22 @@ class bird (
       require     => Package[$daemon_name_v4];
   }
 
-  if $config_file_v4 == 'UNSET' {
-    fail("config_file_v4 parameter must be set (value: ${config_file_v4})")
-  } else {
-    file {
-      '/etc/bird.conf':
-        ensure  => file,
-        source  => $config_file_v4,
-        owner   => root,
-        group   => root,
-        mode    => '0644',
-        notify  => Service[$daemon_name_v4],
-        require => Package[$daemon_name_v4];
-    }
-  } # config_tmpl_v4
+  if $manage_conf == true {
+    if $config_file_v4 == 'UNSET' {
+      fail("config_file_v4 parameter must be set (value: ${config_file_v4})")
+    } else {
+      file {
+        '/etc/bird.conf':
+          ensure  => file,
+          source  => $config_file_v4,
+          owner   => root,
+          group   => root,
+          mode    => '0644',
+          notify  => Service[$daemon_name_v4],
+          require => Package[$daemon_name_v4];
+      }
+    } # config_tmpl_v4
+  } # manage_conf
 
   if $enable_v6 == true {
 
@@ -91,20 +100,23 @@ class bird (
         require    => Package[$daemon_name_v6];
     }
 
-    if $config_file_v6 == 'UNSET' {
-      fail("config_file_v6 parameter must be set (value: ${config_file_v6})")
-    } else {
-      file {
-        '/etc/bird6.conf':
-          ensure  => file,
-          source  => $config_file_v6,
-          owner   => root,
-          group   => root,
-          mode    => '0644',
-          notify  => Service[$daemon_name_v6],
-          require => Package[$daemon_name_v6];
-      }
-    } # config_tmpl_v6
+
+    if $manage_conf == true {
+      if $config_file_v6 == 'UNSET' {
+        fail("config_file_v6 parameter must be set (value: ${config_file_v6})")
+      } else {
+        file {
+          '/etc/bird6.conf':
+            ensure  => file,
+            source  => $config_file_v6,
+            owner   => root,
+            group   => root,
+            mode    => '0644',
+            notify  => Service[$daemon_name_v6],
+            require => Package[$daemon_name_v6];
+        }
+      } # config_tmpl_v6
+    } # manage_conf
   } # enable_v6
 
 } # Class:: bird

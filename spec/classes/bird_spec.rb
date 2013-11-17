@@ -37,6 +37,15 @@ describe 'bird', :type => :class do
         :mode   => '0644',
         :notify => 'Service[bird]'
       )}
+
+      context "without configuration file (IPv4)" do
+        let(:params) {{
+          :enable_v6    => false,
+          :manage_conf  => false
+        }}
+
+        it { should_not contain_file('/etc/bird.conf') }
+      end
     end
 
     context "with IPv4 and IPv6" do
@@ -81,6 +90,16 @@ describe 'bird', :type => :class do
         :mode   => '0644',
         :notify => 'Service[bird6]'
       )}
+
+      context "without configuration file (IPv4/IPv6)" do
+        let(:params) {{
+          :enable_v6    => true,
+          :manage_conf  => false
+        }}
+
+        it { should_not contain_file('/etc/bird.conf') }
+        it { should_not contain_file('/etc/bird6.conf') }
+      end
     end
 
     context "with only IPv4 but config. file unset" do
