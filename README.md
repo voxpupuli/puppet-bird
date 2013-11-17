@@ -21,6 +21,7 @@ Support: IPv4, IPv6, Multiple routing tables, BGP, RIP, OSPF, Static routes, IPv
 ## Parameters
 
 * `enable_v6`: Boolean, enable or disable IPv6 (install bird6 package).
+* `manage_conf`: Boolean, enable or disable bird configuration setup.
 * `config_file_v4`: Location of IPv4 bird configuration.
 * `config_file_v6`: Location of IPv6 bird configuration.
 
