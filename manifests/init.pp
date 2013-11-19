@@ -69,6 +69,13 @@ class bird (
   $config_file_v6     = 'UNSET',
 ) inherits bird::params {
 
+  validate_bool($enable_v6)
+  validate_bool($service_v6_enable)
+  validate_bool($service_v4_enable)
+
+  validate_re($service_v6_ensure,['^running','^stopped'])
+  validate_re($service_v4_ensure,['^running','^stopped'])
+
   package {
     $daemon_name_v4:
       ensure => installed;
