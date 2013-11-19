@@ -16,6 +16,22 @@
 #   Boolean, global parameter to disable or enable mangagment of bird configuration files.
 #   Default: true
 #
+# [*service_v6_ensure*]
+#   Bird IPv6 daemon ensure (shoud be running or stopped).
+#   Default: running
+#
+# [*service_v6_enable*]
+#   Boolean, enabled param of Bird IPv6 service (run at boot time).
+#   Default: true
+#
+# [*service_v4_ensure*]
+#   Bird IPv4 daemon ensure (shoud be running or stopped).
+#   Default: running
+#
+# [*service_v4_enable*]
+#   Boolean, enabled param of Bird IPv4 service (run at boot time).
+#   Default: true
+#
 # [*config_file_v6*]
 #  Bird configuration file for IPv6.
 #  Default: UNSET. (this value is a puppet source, example 'puppet:///modules/bgp/bird6.conf').
@@ -41,12 +57,16 @@
 import 'params.pp'
 #
 class bird (
-  $daemon_name_v4  = $bird::params::daemon_name_v4,
-  $config_file_v4  = 'UNSET',
-  $enable_v6       = true,
-  $manage_conf     = true,
-  $daemon_name_v6  = $bird::params::daemon_name_v6,
-  $config_file_v6  = 'UNSET',
+  $daemon_name_v4     = $bird::params::daemon_name_v4,
+  $config_file_v4     = 'UNSET',
+  $enable_v6          = true,
+  $manage_conf        = true,
+  $service_v6_ensure  = 'running',
+  $service_v6_enable  = true,
+  $service_v4_ensure  = 'running',
+  $service_v4_enable  = true,
+  $daemon_name_v6     = $bird::params::daemon_name_v6,
+  $config_file_v6     = 'UNSET',
 ) inherits bird::params {
 
   package {
@@ -56,8 +76,8 @@ class bird (
 
   service {
     $daemon_name_v4:
-      ensure      => running,
-      enable      => true,
+      ensure      => $service_v4_ensure,
+      enable      => $service_v4_enable,
       hasrestart  => false,
       restart     => '/usr/sbin/birdc configure',
       hasstatus   => false,
@@ -91,8 +111,8 @@ class bird (
 
     service {
       $daemon_name_v6:
-        ensure     => running,
-        enable     => true,
+        ensure     => $service_v6_ensure,
+        enable     => $service_v6_enable,
         hasrestart => false,
         restart    => '/usr/sbin/birdc6 configure',
         hasstatus  => false,
