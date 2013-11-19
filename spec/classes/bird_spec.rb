@@ -30,6 +30,23 @@ describe 'bird', :type => :class do
         :restart    => '/usr/sbin/birdc configure'
       )}
 
+      context "with service (v4) and rc disabled" do
+        let(:params) {{
+          :enable_v6         => false,
+          :service_v4_enable => false,
+          :config_file_v4    => 'puppet:///modules/fooboozoo',
+          :service_v4_ensure => 'stopped',
+        }}
+        it { should contain_service('bird').with(
+          :ensure     => 'stopped',
+          :enable     => 'false',
+          :hasstatus  => 'false',
+          :pattern    => 'bird',
+          :hasrestart => 'false',
+          :restart    => '/usr/sbin/birdc configure'
+        )}
+      end
+
       it { should contain_file('/etc/bird.conf').with(
         :source => 'puppet:///modules/fooboozoo',
         :owner  => 'root',
@@ -64,6 +81,34 @@ describe 'bird', :type => :class do
         :hasrestart => 'false',
         :restart    => '/usr/sbin/birdc configure'
       )}
+
+      context "with service (v6) and rc disabled" do
+        let(:params) {{
+          :service_v6_enable => false,
+          :service_v4_enable => false,
+          :config_file_v4    => 'puppet:///modules/fooboozoo',
+          :enable_v6         => true,
+          :config_file_v6    => 'puppet:///modules/fooboozoo6',
+          :service_v6_ensure => 'stopped',
+          :service_v4_ensure => 'stopped',
+        }}
+        it { should contain_service('bird').with(
+          :ensure     => 'stopped',
+          :enable     => 'false',
+          :hasstatus  => 'false',
+          :pattern    => 'bird',
+          :hasrestart => 'false',
+          :restart    => '/usr/sbin/birdc configure'
+        )}
+        it { should contain_service('bird6').with(
+          :ensure     => 'stopped',
+          :enable     => 'false',
+          :hasstatus  => 'false',
+          :pattern    => 'bird6',
+          :hasrestart => 'false',
+          :restart    => '/usr/sbin/birdc6 configure'
+        )}
+      end
 
       it { should contain_file('/etc/bird.conf').with(
         :source => 'puppet:///modules/fooboozoo',
