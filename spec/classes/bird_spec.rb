@@ -103,7 +103,7 @@ describe 'bird', :type => :class do
     end
 
     context "with only IPv4 but config. file unset" do
-      let(:params) {{ :enable_v6 => 'false' }}
+      let(:params) {{ :enable_v6 => false }}
       it "should fail" do
         expect {
           should include_class("bird::params")
@@ -112,7 +112,7 @@ describe 'bird', :type => :class do
     end
 
     context "with IPv4 and IPVv6 but config. file unset" do
-      let(:params) {{ :enable_v6 => 'true' }}
+      let(:params) {{ :enable_v6 => true }}
       it "should fail" do
         expect {
           should include_class("bird::params")
