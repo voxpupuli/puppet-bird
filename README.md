@@ -24,6 +24,7 @@ class { 'bird':
 
 * `enable_v6`: Boolean, enable or disable IPv6 (install bird6 package).
 * `manage_conf`: Boolean, enable or disable bird configuration setup.
+* `manage_service`: Boolean, enable or disable bird service setup.
 * `config_file_v4`: Location of IPv4 bird configuration.
 * `service_v4_ensure`: State of IPv4 service (running/stopped).
 * `service_v4_enable`: Boolean, run Bird V4 on boot.

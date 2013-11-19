@@ -61,6 +61,7 @@ class bird (
   $config_file_v4     = 'UNSET',
   $enable_v6          = true,
   $manage_conf        = true,
+  $manage_service     = true,
   $service_v6_ensure  = 'running',
   $service_v6_enable  = true,
   $service_v4_ensure  = 'running',
@@ -68,6 +69,9 @@ class bird (
   $daemon_name_v6     = $bird::params::daemon_name_v6,
   $config_file_v6     = 'UNSET',
 ) inherits bird::params {
+
+  validate_bool($manage_conf)
+  validate_bool($manage_service)
 
   validate_bool($enable_v6)
   validate_bool($service_v6_enable)
@@ -81,15 +85,17 @@ class bird (
       ensure => installed;
   }
 
-  service {
-    $daemon_name_v4:
-      ensure      => $service_v4_ensure,
-      enable      => $service_v4_enable,
-      hasrestart  => false,
-      restart     => '/usr/sbin/birdc configure',
-      hasstatus   => false,
-      pattern     => $daemon_name_v4,
-      require     => Package[$daemon_name_v4];
+  if $manage_service == true {
+    service {
+      $daemon_name_v4:
+        ensure      => $service_v4_ensure,
+        enable      => $service_v4_enable,
+        hasrestart  => false,
+        restart     => '/usr/sbin/birdc configure',
+        hasstatus   => false,
+        pattern     => $daemon_name_v4,
+        require     => Package[$daemon_name_v4];
+    }
   }
 
   if $manage_conf == true {
@@ -116,17 +122,18 @@ class bird (
         ensure => installed;
     }
 
-    service {
-      $daemon_name_v6:
-        ensure     => $service_v6_ensure,
-        enable     => $service_v6_enable,
-        hasrestart => false,
-        restart    => '/usr/sbin/birdc6 configure',
-        hasstatus  => false,
-        pattern    => $daemon_name_v6,
-        require    => Package[$daemon_name_v6];
+    if $manage_service == true {
+      service {
+        $daemon_name_v6:
+          ensure     => $service_v6_ensure,
+          enable     => $service_v6_enable,
+          hasrestart => false,
+          restart    => '/usr/sbin/birdc6 configure',
+          hasstatus  => false,
+          pattern    => $daemon_name_v6,
+          require    => Package[$daemon_name_v6];
+      }
     }
-
 
     if $manage_conf == true {
       if $config_file_v6 == 'UNSET' {
