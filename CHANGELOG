@@ -1,3 +1,5 @@
+* 2013-11-19 - 0.0.5
+- Add param to completly disable service managment (for LDN (bird in netns))
 * 2013-11-19 - 0.0.4
 - Add extra params
 - And dependency to stdlib (params checks)
