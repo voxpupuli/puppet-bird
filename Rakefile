@@ -13,7 +13,7 @@ PuppetLint.configuration.send('disable_class_inherits_from_params_class')
 PuppetLint.configuration.fail_on_warnings = true
 
 def get_version
-  if File.read(File.join(TDIR, 'Modulefile')) =~ /(\d+)\.(\d+)\.(\d+)/
+  if File.read(File.join(TDIR, 'metadata.json')) =~ /(\d+)\.(\d+)\.(\d+)/
     return [$1.to_i, $2.to_i, $3.to_i].compact.join('.')
   end
 end # def:: get_version
