@@ -1,4 +1,9 @@
-# Puppet-bird [![Build Status](https://travis-ci.org/sbadia/puppet-bird.png)](https://travis-ci.org/sbadia/puppet-bird)
+# Puppet-bird
+
+[![Build Status](https://travis-ci.org/sbadia/puppet-bird.png?branch=master)](https://travis-ci.org/sbadia/puppet-bird)
+[![Puppet Forge](http://img.shields.io/puppetforge/v/sbadia/bird.svg)](https://forge.puppetlabs.com/sbadia/bird)
+[![License](http://img.shields.io/:license-gpl3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.html)
+
 
 Manage [bird](http://bird.network.cz/) routing daemon via Puppet
 
@@ -36,6 +41,14 @@ class { 'bird':
 
 * `puppetlabs/stdlib`
 
+# Contributors
+
+* https://github.com/sbadia/puppet-bird/graphs/contributors
+
+# Release Notes
+
+See [CHANGELOG](https://github.com/sbadia/puppet-bird/blob/master/CHANGELOG.md) file.
+
 ## Development
 
-[Feel free to contribute](https://github.com/sbadia/puppet-metche/). I'm not a big fan of centralized services like GitHub but I used it to permit easy pull-requests, so show me that's a good idea!
+[Feel free to contribute](https://github.com/sbadia/puppet-bird/). I'm not a big fan of centralized services like GitHub but I used it to permit easy pull-requests, so show me that's a good idea!

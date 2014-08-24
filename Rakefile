@@ -96,7 +96,8 @@ namespace :module do
 
 end
 
-
-
 task(:default).clear
-task :default => [:spec, :lint]
+task :default => [:spec_prep, :spec_standalone, :lint]
+
+desc 'Run syntax, lint and spec tests'
+task :test => [:syntax,:lint,:spec]
