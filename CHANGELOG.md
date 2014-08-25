@@ -1,3 +1,8 @@
+## 2014-08-25 - 1.0.0
+* Switch to metadata.json (puppetforge)
+* Fix spec tests and update readme
+* Use semver.org
+
 ## 2013-11-19 - 0.0.5
 * Add param to completly disable service managment (for LDN (bird in netns))
 
