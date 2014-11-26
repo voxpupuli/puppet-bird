@@ -7,15 +7,11 @@ else
 end
 
 gem 'rake', '10.1.0'
-# rspec-puppet fetch the latest rspec (3.0.0)
-# this version is a bit incompat. with older specs...
-# http://myronmars.to/n/dev-blog/2014/05/notable-changes-in-rspec-3
-gem 'rspec', '2.14.1'
-gem 'puppet-lint', '~> 0.3.2'
+gem 'puppet-lint', '~> 1.1'
+gem 'puppet-lint-param-docs'
 gem 'rspec-puppet'
 gem 'puppet-syntax'
 gem 'puppet', puppetversion
 gem 'puppetlabs_spec_helper'
-gem 'rspec-system'
-gem 'rspec-system-puppet'
-gem 'rspec-system-serverspec'
+gem 'beaker-rspec', '~> 2.2.4'
+gem 'metadata-json-lint'
