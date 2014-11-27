@@ -54,8 +54,6 @@
 # Copyleft 2013 Sebastien Badia
 # See LICENSE file
 #
-import 'params.pp'
-#
 class bird (
   $daemon_name_v4     = $bird::params::daemon_name_v4,
   $config_file_v4     = 'UNSET',
