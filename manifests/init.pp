@@ -5,8 +5,16 @@
 # === Parameters
 #
 # [*config_file_v4*]
-#  Bird configuration file for IPv4.
-#  Default: UNSET. (this value is a puppet source, example 'puppet:///modules/bgp/bird.conf').
+#   Bird configuration file for IPv4.
+#   Default: UNSET. (this value is a puppet source, example 'puppet:///modules/bgp/bird.conf').
+#
+# [*daemon_name_v6*]
+#   The service name used by puppet ressource
+#   Default: bird6
+#
+# [*daemon_name_v4*]
+#   The service name used by puppet ressource
+#   Default: bird
 #
 # [*enable_v6*]
 #   Boolean for enable IPv6 (install bird6 package)
@@ -14,6 +22,10 @@
 #
 # [*manage_conf*]
 #   Boolean, global parameter to disable or enable mangagment of bird configuration files.
+#   Default: true
+#
+# [*manage_service*]
+#   Boolean, global parameter to disable or enable mangagment of bird service.
 #   Default: true
 #
 # [*service_v6_ensure*]
@@ -55,17 +67,17 @@
 # See LICENSE file
 #
 class bird (
-  $daemon_name_v4     = $bird::params::daemon_name_v4,
-  $config_file_v4     = 'UNSET',
-  $enable_v6          = true,
-  $manage_conf        = true,
-  $manage_service     = true,
-  $service_v6_ensure  = 'running',
-  $service_v6_enable  = true,
-  $service_v4_ensure  = 'running',
-  $service_v4_enable  = true,
-  $daemon_name_v6     = $bird::params::daemon_name_v6,
-  $config_file_v6     = 'UNSET',
+  $daemon_name_v4    = $bird::params::daemon_name_v4,
+  $config_file_v4    = 'UNSET',
+  $enable_v6         = true,
+  $manage_conf       = true,
+  $manage_service    = true,
+  $service_v6_ensure = 'running',
+  $service_v6_enable = true,
+  $service_v4_ensure = 'running',
+  $service_v4_enable = true,
+  $daemon_name_v6    = $bird::params::daemon_name_v6,
+  $config_file_v6    = 'UNSET',
 ) inherits bird::params {
 
   validate_bool($manage_conf)
