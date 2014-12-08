@@ -19,7 +19,7 @@ describe 'bird', :type => :class do
         :config_file_v4 => 'puppet:///modules/fooboozoo',
         :enable_v6      => false,
       }}
-      it { should include_class("bird::params") }
+      it { should contain_class("bird::params") }
       it { should contain_package('bird') }
       it { should contain_service('bird').with(
         :ensure     => 'running',
@@ -71,7 +71,7 @@ describe 'bird', :type => :class do
         :enable_v6      => true,
         :config_file_v6 => 'puppet:///modules/fooboozoo6',
       }}
-      it { should include_class("bird::params") }
+      it { should contain_class("bird::params") }
       it { should contain_package('bird') }
       it { should contain_service('bird').with(
         :ensure     => 'running',
@@ -151,7 +151,7 @@ describe 'bird', :type => :class do
       let(:params) {{ :enable_v6 => false }}
       it "should fail" do
         expect {
-          should include_class("bird::params")
+          should contain_class("bird::params")
         }.to raise_error(Puppet::Error, /must be set/)
       end
     end
@@ -160,7 +160,7 @@ describe 'bird', :type => :class do
       let(:params) {{ :enable_v6 => true }}
       it "should fail" do
         expect {
-          should include_class("bird::params")
+          should contain_class("bird::params")
         }.to raise_error(Puppet::Error, /must be set/)
       end
     end
