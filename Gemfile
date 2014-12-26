@@ -1,17 +1,34 @@
-source 'https://rubygems.org'
+# Managed by modulesync
+# Configs https://github.com/sbadia/modulesync_configs/
+#
+source ENV['GEM_SOURCE'] || "https://rubygems.org"
 
-if ENV.key?('PUPPET_GEM_VERSION')
-  puppetversion = ENV['PUPPET_GEM_VERSION']
-else
-  puppetversion = ['>= 3.0']
+group :development, :unit_tests do
+  gem 'rake',                    :require => false
+  gem 'puppetlabs_spec_helper',  :require => false
+  gem 'rspec-puppet',            :require => false
+  gem 'puppet-syntax',           :require => false
+  gem 'puppet-lint',             :require => false
+  gem 'puppet-lint-param-docs',  :require => false
+  gem 'metadata-json-lint',      :require => false
+  gem 'puppet_facts',            :require => false
+  gem 'json',                    :require => false
 end
 
-gem 'rake', '10.1.0'
-gem 'puppet-lint', '~> 1.1'
-gem 'puppet-lint-param-docs'
-gem 'rspec-puppet'
-gem 'puppet-syntax'
-gem 'puppet', puppetversion
-gem 'puppetlabs_spec_helper'
-gem 'beaker-rspec', '~> 2.2.4'
-gem 'metadata-json-lint'
+group :system_tests do
+  gem 'beaker-rspec',  :require => false
+end
+
+if facterversion = ENV['FACTER_GEM_VERSION']
+  gem 'facter', facterversion, :require => false
+else
+  gem 'facter', :require => false
+end
+
+if puppetversion = ENV['PUPPET_GEM_VERSION']
+  gem 'puppet', puppetversion, :require => false
+else
+  gem 'puppet', :require => false
+end
+
+# vim:ft=ruby
