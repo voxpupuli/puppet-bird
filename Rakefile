@@ -11,7 +11,7 @@ require 'puppet-syntax/tasks/puppet-syntax'
 TDIR = File.expand_path(File.dirname(__FILE__))
 NAME = "sbadia-#{File.basename(TDIR).split('-')[1]}"
 
-exclude_path = ["spec/**/*.pp", "pkg/**/*.pp"]
+exclude_path = ["spec/**/*","pkg/**/*","vendor/**/*"]
 
 PuppetLint.configuration.fail_on_warnings
 PuppetLint.configuration.send('disable_80chars')
