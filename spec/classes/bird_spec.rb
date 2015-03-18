@@ -4,11 +4,7 @@ describe 'bird', :type => :class do
 
   describe 'On an unknown operating system' do
     let(:facts) {{ :osfamily => 'Unknown' }}
-    it "should fail" do
-      expect do
-        subject
-      end.to raise_error(Puppet::Error, /Unsupported osfamily/)
-    end
+    it { expect { catalogue }.to raise_error(Puppet::Error, /Unsupported osfamily/) }
   end
 
   context "On Debian" do
