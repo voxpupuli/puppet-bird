@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "author": "Sebastien Badia",
   "summary": "Puppet bird Module",
-  "license": "GPLv3",
+  "license": "GPL-3.0",
   "source": "https://github.com/sbadia/puppet-bird",
   "project_page": "https://github.com/sbadia/puppet-bird/",
   "issues_url": "https://github.com/sbadia/puppet-bird/issues",
