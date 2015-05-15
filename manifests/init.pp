@@ -169,7 +169,7 @@ class bird (
     }
 
     if $manage_conf == true {
-      if $config_file_v6 == 'UNSET' and $config_template(v6 == 'UNSET' {
+      if $config_file_v6 == 'UNSET' and $config_template_v6 == 'UNSET' {
         fail("either config_file_v6 or config_template_v6 parameter must be set (config_file_v6: ${config_file_v6}, config_template_v6: ${config_template_v6})")
       } else {
         if $config_file_v6 != 'UNSET' {
