@@ -8,6 +8,10 @@
 #   Bird configuration file for IPv4.
 #   Default: UNSET. (this value is a puppet source, example 'puppet:///modules/bgp/bird.conf').
 #
+# [*config_template_v4*]
+#   Bird configuration template for IPv4.
+#   Default: UNSET. (this value is a template source, it will be passed into the template() function).
+#
 # [*daemon_name_v6*]
 #   The service name used by puppet ressource
 #   Default: bird6
@@ -48,6 +52,10 @@
 #  Bird configuration file for IPv6.
 #  Default: UNSET. (this value is a puppet source, example 'puppet:///modules/bgp/bird6.conf').
 #
+# [*config_template_v6*]
+#   Bird configuration template for IPv6.
+#   Default: UNSET. (this value is a template source, it will be passed into the template() function).
+#
 # === Examples
 #
 #  class { 'bird':
@@ -67,17 +75,19 @@
 # See LICENSE file
 #
 class bird (
-  $daemon_name_v4    = $bird::params::daemon_name_v4,
-  $config_file_v4    = 'UNSET',
-  $enable_v6         = true,
-  $manage_conf       = true,
-  $manage_service    = true,
-  $service_v6_ensure = 'running',
-  $service_v6_enable = true,
-  $service_v4_ensure = 'running',
-  $service_v4_enable = true,
-  $daemon_name_v6    = $bird::params::daemon_name_v6,
-  $config_file_v6    = 'UNSET',
+  $daemon_name_v4     = $bird::params::daemon_name_v4,
+  $config_file_v4     = 'UNSET',
+  $config_template_v4 = 'UNSET',
+  $enable_v6          = true,
+  $manage_conf        = true,
+  $manage_service     = true,
+  $service_v6_ensure  = 'running',
+  $service_v6_enable  = true,
+  $service_v4_ensure  = 'running',
+  $service_v4_enable  = true,
+  $daemon_name_v6     = $bird::params::daemon_name_v6,
+  $config_file_v6     = 'UNSET',
+  $config_template_v6 = 'UNSET',
 ) inherits bird::params {
 
   validate_bool($manage_conf)
@@ -109,19 +119,32 @@ class bird (
   }
 
   if $manage_conf == true {
-    if $config_file_v4 == 'UNSET' {
-      fail("config_file_v4 parameter must be set (value: ${config_file_v4})")
+    if $config_file_v4 == 'UNSET' and $config_template_v4 == 'UNSET' {
+      fail("either config_file_v4 or config_template_v4 parameter must be set (config_file_v4: ${config_file_v4}, config_template_v4: ${config_template_v4})")
     } else {
-      file {
-        '/etc/bird.conf':
-          ensure  => file,
-          source  => $config_file_v4,
-          owner   => root,
-          group   => root,
-          mode    => '0644',
-          notify  => Service[$daemon_name_v4],
-          require => Package[$daemon_name_v4];
-      }
+      if $config_file_v4 != 'UNSET' {
+        file {
+          '/etc/bird.conf':
+            ensure  => file,
+            source  => $config_file_v4,
+            owner   => root,
+            group   => root,
+            mode    => '0644',
+            notify  => Service[$daemon_name_v4],
+            require => Package[$daemon_name_v4];
+        }
+      } else {
+        file {
+          '/etc/bird.conf':
+            ensure  => file,
+            content => template($config_template_v4),
+            owner   => root,
+            group   => root,
+            mode    => '0644',
+            notify  => Service[$daemon_name_v4],
+            require => Package[$daemon_name_v4];
+        }
+      } # config_file_v4
     } # config_tmpl_v4
   } # manage_conf
 
@@ -146,19 +169,32 @@ class bird (
     }
 
     if $manage_conf == true {
-      if $config_file_v6 == 'UNSET' {
-        fail("config_file_v6 parameter must be set (value: ${config_file_v6})")
+      if $config_file_v6 == 'UNSET' and $config_template(v6 == 'UNSET' {
+        fail("either config_file_v6 or config_template_v6 parameter must be set (config_file_v6: ${config_file_v6}, config_template_v6: ${config_template_v6})")
       } else {
-        file {
-          '/etc/bird6.conf':
-            ensure  => file,
-            source  => $config_file_v6,
-            owner   => root,
-            group   => root,
-            mode    => '0644',
-            notify  => Service[$daemon_name_v6],
-            require => Package[$daemon_name_v6];
-        }
+        if $config_file_v6 != 'UNSET' {
+          file {
+            '/etc/bird6.conf':
+              ensure  => file,
+              source  => $config_file_v6,
+              owner   => root,
+              group   => root,
+              mode    => '0644',
+              notify  => Service[$daemon_name_v6],
+              require => Package[$daemon_name_v6];
+          }
+        } else {
+          file {
+            '/etc/bird6.conf':
+              ensure  => file,
+              content => template($config_template_v6),
+              owner   => root,
+              group   => root,
+              mode    => '0644',
+              notify  => Service[$daemon_name_v6],
+              require => Package[$daemon_name_v6];
+          }
+        } # config_file_v6
       } # config_tmpl_v6
     } # manage_conf
   } # enable_v6
