@@ -124,7 +124,7 @@ class bird (
     } else {
       if $config_file_v4 != 'UNSET' {
         file {
-          '/etc/bird.conf':
+          $config_path_v4:
             ensure  => file,
             source  => $config_file_v4,
             owner   => root,
@@ -135,7 +135,7 @@ class bird (
         }
       } else {
         file {
-          '/etc/bird.conf':
+          $config_path_v4:
             ensure  => file,
             content => template($config_template_v4),
             owner   => root,
@@ -174,7 +174,7 @@ class bird (
       } else {
         if $config_file_v6 != 'UNSET' {
           file {
-            '/etc/bird6.conf':
+            $config_path_v6:
               ensure  => file,
               source  => $config_file_v6,
               owner   => root,
@@ -185,7 +185,7 @@ class bird (
           }
         } else {
           file {
-            '/etc/bird6.conf':
+            $config_path_v6:
               ensure  => file,
               content => template($config_template_v6),
               owner   => root,
