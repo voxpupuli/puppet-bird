@@ -20,6 +20,14 @@
 #   The service name used by puppet ressource
 #   Default: bird
 #
+# [*config_path_v6*]
+#   The full path of the v6 configuration file
+#   Default: /etc/bird/bird6.conf
+#
+# [*config_path_v4*]
+#   The full path of the v4 configuration file
+#   Default: /etc/bird/bird.conf
+#
 # [*enable_v6*]
 #   Boolean for enable IPv6 (install bird6 package)
 #   Default: true
@@ -76,6 +84,7 @@
 #
 class bird (
   $daemon_name_v4     = $bird::params::daemon_name_v4,
+  $config_path_v4     = $bird::params::config_path_v4,
   $config_file_v4     = 'UNSET',
   $config_template_v4 = 'UNSET',
   $enable_v6          = false,
@@ -86,6 +95,7 @@ class bird (
   $service_v4_ensure  = 'running',
   $service_v4_enable  = false,
   $daemon_name_v6     = $bird::params::daemon_name_v6,
+  $config_path_v6     = $bird::params::config_path_v6,
   $config_file_v6     = 'UNSET',
   $config_template_v6 = 'UNSET',
 ) inherits bird::params {
@@ -108,13 +118,13 @@ class bird (
   if $manage_service == true {
     service {
       $daemon_name_v4:
-        ensure      => $service_v4_ensure,
-        enable      => $service_v4_enable,
-        hasrestart  => false,
-        restart     => '/usr/sbin/birdc configure',
-        hasstatus   => false,
-        pattern     => $daemon_name_v4,
-        require     => Package[$daemon_name_v4];
+        ensure     => $service_v4_ensure,
+        enable     => $service_v4_enable,
+        hasrestart => false,
+        restart    => '/usr/sbin/birdc configure',
+        hasstatus  => false,
+        pattern    => $daemon_name_v4,
+        require    => Package[$daemon_name_v4];
     }
   }
 
