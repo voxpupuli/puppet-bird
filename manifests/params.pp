@@ -8,7 +8,11 @@ class bird::params {
       $daemon_name_v4   = 'bird'
       $daemon_name_v6   = 'bird6'
       $package_name_v4  = 'bird'
-      $package_name_v6  = 'bird6'
+      if $::facts['os']['release']['major'] == '9' {
+        $package_name_v6  = 'bird'
+      } else {
+        $package_name_v6  = 'bird6'
+      }
     }
     'RedHat': {
       $config_path_v4   = '/etc/bird.conf'
