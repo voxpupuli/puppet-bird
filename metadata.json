@@ -1,7 +1,7 @@
 {
   "name": "puppet-bird",
-  "version": "1.1.0",
-  "author": "Sebastien Badia",
+  "version": "1.2.0",
+  "author": "Vox Pupuli",
   "summary": "Puppet bird Module",
   "license": "GPL-3.0",
   "source": "https://github.com/voxpupuli/puppet-bird",
@@ -11,7 +11,6 @@
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "7",
         "8",
         "9"
       ]
@@ -26,6 +25,15 @@
   ],
   "description": "Module to install/manage Bird internet routing daemon using puppet",
   "dependencies": [
-    {"name":"puppetlabs/stdlib","version_requirement":">= 4.0.0 <5.0.0"}
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 4.0.0 < 5.0.0"
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.7.1 < 6.0.0"
+    }
   ]
 }
