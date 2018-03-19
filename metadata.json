@@ -1,12 +1,12 @@
 {
-  "name": "sbadia-bird",
+  "name": "puppet-bird",
   "version": "1.1.0",
   "author": "Sebastien Badia",
   "summary": "Puppet bird Module",
   "license": "GPL-3.0",
-  "source": "https://github.com/sbadia/puppet-bird",
-  "project_page": "https://github.com/sbadia/puppet-bird/",
-  "issues_url": "https://github.com/sbadia/puppet-bird/issues",
+  "source": "https://github.com/voxpupuli/puppet-bird",
+  "project_page": "https://github.com/voxpupuli/puppet-bird/",
+  "issues_url": "https://github.com/voxpupuli/puppet-bird/issues",
   "operatingsystem_support": [
     {
       "operatingsystem": "Debian",
