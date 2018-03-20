@@ -1,7 +1,10 @@
 # Puppet-bird
 
 [![Build Status](https://travis-ci.org/voxpupuli/puppet-bird.png?branch=master)](https://travis-ci.org/voxpupuli/puppet-bird)
-[![Puppet Forge](http://img.shields.io/puppetforge/v/voxpupuli/bird.svg)](https://forge.puppetlabs.com/voxpupuli/bird)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/bird.svg)](https://forge.puppetlabs.com/puppet/bird)
+[![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/bird.svg)](https://forge.puppetlabs.com/puppet/bird)
+[![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/bird.svg)](https://forge.puppetlabs.com/puppet/bird)
+[![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/bird.svg)](https://forge.puppetlabs.com/puppet/bird)
 [![License](http://img.shields.io/:license-gpl3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.html)
 
 
@@ -52,3 +55,7 @@ See [CHANGELOG](https://github.com/voxpupuli/puppet-bird/blob/master/CHANGELOG.m
 ## Development
 
 [Feel free to contribute](https://github.com/voxpupuli/puppet-bird/). I'm not a big fan of centralized services like GitHub but I used it to permit easy pull-requests, so show me that's a good idea!
+
+## Authors
+
+This module got migrated from sbadia to Vox Pupuli
