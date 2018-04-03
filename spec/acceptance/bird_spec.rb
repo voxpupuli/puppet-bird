@@ -5,7 +5,10 @@ describe 'bird class' do
     # Using puppet_apply as a helper
     it 'works idempotently with no errors' do
       pp = <<-EOS
-      class { '::bird': }
+      class { '::bird':
+        manage_service => true,
+        service_v4_enable => true
+      }
       EOS
 
       # Run it twice and test for idempotency
