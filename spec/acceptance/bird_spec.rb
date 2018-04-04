@@ -7,7 +7,9 @@ describe 'bird class' do
       pp = <<-EOS
       class { '::bird':
         manage_service => true,
-        service_v4_enable => true
+        service_v4_enable => true,
+        enable_v6 => true,
+        service_v6_enable => true
       }
       EOS
 
@@ -21,6 +23,11 @@ describe 'bird class' do
     end
 
     describe service('bird') do
+      it { is_expected.to be_enabled }
+      it { is_expected.to be_running }
+    end
+
+    describe service('bird6') do
       it { is_expected.to be_enabled }
       it { is_expected.to be_running }
     end
