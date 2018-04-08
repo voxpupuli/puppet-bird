@@ -16,8 +16,16 @@
 #   The service name used by puppet ressource
 #   Default: bird6
 #
+# [*package_name_v6*]
+#   The package name used by puppet ressource
+#   Default: bird6
+#
 # [*daemon_name_v4*]
 #   The service name used by puppet ressource
+#   Default: bird
+#
+# [*package_name_v4*]
+#   The package name used by puppet ressource
 #   Default: bird
 #
 # [*config_path_v6*]
@@ -30,15 +38,15 @@
 #
 # [*enable_v6*]
 #   Boolean for enable IPv6 (install bird6 package)
-#   Default: true
+#   Default: false
 #
 # [*manage_conf*]
 #   Boolean, global parameter to disable or enable mangagment of bird configuration files.
-#   Default: true
+#   Default: false
 #
 # [*manage_service*]
 #   Boolean, global parameter to disable or enable mangagment of bird service.
-#   Default: true
+#   Default: false
 #
 # [*service_v6_ensure*]
 #   Bird IPv6 daemon ensure (shoud be running or stopped).
@@ -46,7 +54,7 @@
 #
 # [*service_v6_enable*]
 #   Boolean, enabled param of Bird IPv6 service (run at boot time).
-#   Default: true
+#   Default: false
 #
 # [*service_v4_ensure*]
 #   Bird IPv4 daemon ensure (shoud be running or stopped).
@@ -54,7 +62,7 @@
 #
 # [*service_v4_enable*]
 #   Boolean, enabled param of Bird IPv4 service (run at boot time).
-#   Default: true
+#   Default: false
 #
 # [*config_file_v6*]
 #  Bird configuration file for IPv6.
@@ -84,6 +92,7 @@
 #
 class bird (
   $daemon_name_v4     = $bird::params::daemon_name_v4,
+  $package_name_v4    = $bird::params::package_name_v4,
   $config_path_v4     = $bird::params::config_path_v4,
   $config_file_v4     = 'UNSET',
   $config_template_v4 = 'UNSET',
@@ -95,6 +104,7 @@ class bird (
   $service_v4_ensure  = 'running',
   $service_v4_enable  = false,
   $daemon_name_v6     = $bird::params::daemon_name_v6,
+  $package_name_v6    = $bird::params::package_name_v6,
   $config_path_v6     = $bird::params::config_path_v6,
   $config_file_v6     = 'UNSET',
   $config_template_v6 = 'UNSET',
@@ -110,10 +120,7 @@ class bird (
   validate_re($service_v6_ensure,['^running','^stopped'])
   validate_re($service_v4_ensure,['^running','^stopped'])
 
-  package {
-    $daemon_name_v4:
-      ensure => installed;
-  }
+  ensure_packages([$package_name_v4], {'ensure' => 'present'})
 
   if $manage_service == true {
     service {
@@ -124,7 +131,7 @@ class bird (
         restart    => '/usr/sbin/birdc configure',
         hasstatus  => false,
         pattern    => $daemon_name_v4,
-        require    => Package[$daemon_name_v4];
+        require    => Package[$package_name_v4];
     }
   }
 
@@ -141,7 +148,7 @@ class bird (
             group   => root,
             mode    => '0644',
             notify  => Service[$daemon_name_v4],
-            require => Package[$daemon_name_v4];
+            require => Package[$package_name_v4];
         }
       } else {
         file {
@@ -152,7 +159,7 @@ class bird (
             group   => root,
             mode    => '0644',
             notify  => Service[$daemon_name_v4],
-            require => Package[$daemon_name_v4];
+            require => Package[$package_name_v4];
         }
       } # config_file_v4
     } # config_tmpl_v4
@@ -160,10 +167,7 @@ class bird (
 
   if $enable_v6 == true {
 
-    package {
-      $daemon_name_v6:
-        ensure => installed;
-    }
+    ensure_packages([$package_name_v6], {'ensure' => 'present'})
 
     if $manage_service == true {
       service {
@@ -174,7 +178,7 @@ class bird (
           restart    => '/usr/sbin/birdc6 configure',
           hasstatus  => false,
           pattern    => $daemon_name_v6,
-          require    => Package[$daemon_name_v6];
+          require    => Package[$package_name_v6];
       }
     }
 
@@ -191,7 +195,7 @@ class bird (
               group   => root,
               mode    => '0644',
               notify  => Service[$daemon_name_v6],
-              require => Package[$daemon_name_v6];
+              require => Package[$package_name_v6];
           }
         } else {
           file {
@@ -202,7 +206,7 @@ class bird (
               group   => root,
               mode    => '0644',
               notify  => Service[$daemon_name_v6],
-              require => Package[$daemon_name_v6];
+              require => Package[$package_name_v6];
           }
         } # config_file_v6
       } # config_tmpl_v6
