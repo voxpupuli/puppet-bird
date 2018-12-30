@@ -91,34 +91,24 @@
 # See LICENSE file
 #
 class bird (
-  $daemon_name_v4     = $bird::params::daemon_name_v4,
-  $package_name_v4    = $bird::params::package_name_v4,
-  $config_path_v4     = $bird::params::config_path_v4,
-  $config_file_v4     = 'UNSET',
-  $config_template_v4 = 'UNSET',
-  $enable_v6          = false,
-  $manage_conf        = false,
-  $manage_service     = false,
-  $service_v6_ensure  = 'running',
-  $service_v6_enable  = false,
-  $service_v4_ensure  = 'running',
-  $service_v4_enable  = false,
-  $daemon_name_v6     = $bird::params::daemon_name_v6,
-  $package_name_v6    = $bird::params::package_name_v6,
-  $config_path_v6     = $bird::params::config_path_v6,
-  $config_file_v6     = 'UNSET',
-  $config_template_v6 = 'UNSET',
+  $daemon_name_v4                               = $bird::params::daemon_name_v4,
+  $package_name_v4                              = $bird::params::package_name_v4,
+  $config_path_v4                               = $bird::params::config_path_v4,
+  $config_file_v4                               = 'UNSET',
+  $config_template_v4                           = 'UNSET',
+  Boolean $enable_v6                            = false,
+  Boolean $manage_conf                          = false,
+  Boolean $manage_service                       = false,
+  Enum['running', 'stopped'] $service_v6_ensure = 'running',
+  Boolean $service_v6_enable                    = false,
+  Enum['running', 'stopped'] $service_v4_ensure = 'running',
+  Boolean $service_v4_enable                    = false,
+  $daemon_name_v6                               = $bird::params::daemon_name_v6,
+  $package_name_v6                              = $bird::params::package_name_v6,
+  $config_path_v6                               = $bird::params::config_path_v6,
+  $config_file_v6                               = 'UNSET',
+  $config_template_v6                           = 'UNSET',
 ) inherits bird::params {
-
-  validate_bool($manage_conf)
-  validate_bool($manage_service)
-
-  validate_bool($enable_v6)
-  validate_bool($service_v6_enable)
-  validate_bool($service_v4_enable)
-
-  validate_re($service_v6_ensure,['^running','^stopped'])
-  validate_re($service_v4_ensure,['^running','^stopped'])
 
   ensure_packages([$package_name_v4], {'ensure' => 'present'})
 
