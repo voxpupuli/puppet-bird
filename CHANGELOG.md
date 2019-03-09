@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v2.0.0](https://github.com/voxpupuli/puppet-bird/tree/v2.0.0) (2019-03-09)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-bird/compare/v1.2.1...v2.0.0)
+
+**Breaking changes:**
+
+- modulesync 2.6.0 & drop Puppet 4 [\#24](https://github.com/voxpupuli/puppet-bird/pull/24) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- replace validate\_\* with datatypes [\#23](https://github.com/voxpupuli/puppet-bird/pull/23) ([bastelfreak](https://github.com/bastelfreak))
+- modulesync 2.1.0 and allow puppet 6.x [\#19](https://github.com/voxpupuli/puppet-bird/pull/19) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v1.2.1](https://github.com/voxpupuli/puppet-bird/tree/v1.2.1) (2018-09-07)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-bird/compare/v1.2.0...v1.2.1)
@@ -41,7 +54,7 @@ These should not affect the functionality of the module.
 * init: Added missing config_path as class parameter (for hiera)
 * travis: Disable ruby 1.9 testing
 * Fix default RedHat config paths
-* Added conditional for RedHat based distributions, and added $package_name_v\* for removing dupl
+* Added conditional for RedHat based distributions, and added $package_name_v* for removing dupl
 * Conservative defaults
 * Per-OS config path, and fix path on Debian
 * Add support for config templates
