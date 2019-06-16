@@ -10,7 +10,7 @@ class bird::params {
       $package_name_v4  = 'bird'
       # Compatibility for Debian oldstable and Ubuntu old LTS
       # the bird package now provides bird and bird6 daemons
-      if ($facts['os']['name'] == 'ubuntu' and $facts['lsbdistcodename'] in ['precise', 'trusty']) or
+      if ($facts['lsbdistcodename'] == 'precise') or
       ($facts['os']['name'] == 'debian' and $facts['os']['release']['major'] in ['7', '8']) {
         $package_name_v6  = 'bird6'
       } else {
