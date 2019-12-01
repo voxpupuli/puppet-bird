@@ -99,7 +99,7 @@ describe 'bird' do
             'source' => 'puppet:///modules/fooboozoo',
             'owner'  => 'root',
             'group'  => 'root',
-            'mode'   => '0644',
+            'mode'   => '0644'
           ).that_notifies('Service[bird]')
         }
 
