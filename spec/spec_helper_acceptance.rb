@@ -9,9 +9,14 @@ RSpec.configure do |c|
   # Readable test descriptions
   c.formatter = :documentation
 
-  # Configure all nodes in nodeset
   c.before :suite do
     install_module
     install_module_dependencies
+    hosts.each do |host|
+      if fact('os.family') == 'RedHat'
+        # Soft dep on epel for Passenger
+        install_package(host, 'epel-release')
+      end
+    end
   end
 end
