@@ -2,6 +2,14 @@ require 'spec_helper'
 
 describe 'bird' do
   on_supported_os.each do |os, facts|
+    case facts[:os]['family']
+    when 'RedHat'
+      filepath   = '/etc/bird.conf'
+      filepathv6 = '/etc/bird6.conf'
+    when 'Debian'
+      filepath   = '/etc/bird/bird.conf'
+      filepathv6 = '/etc/bird/bird6.conf'
+    end
     context "on #{os}" do
       let(:facts) do
         facts
@@ -19,6 +27,8 @@ describe 'bird' do
           }
         end
 
+        it { is_expected.not_to contain_yumrepo('bird') }
+        it { is_expected.not_to contain_package('bird').with_require('Yumrepo[bird]') }
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_class('bird::params') }
         it { is_expected.to contain_package('bird') }
@@ -54,7 +64,7 @@ describe 'bird' do
         end
 
         it {
-          is_expected.to contain_file('/etc/bird/bird.conf').with(
+          is_expected.to contain_file(filepath).with(
             'source' => 'puppet:///modules/fooboozoo',
             'owner'  => 'root',
             'group'  => 'root',
@@ -66,7 +76,7 @@ describe 'bird' do
           let(:params) { { manage_conf: false } }
 
           it { is_expected.to compile.with_all_deps }
-          it { is_expected.not_to contain_file('/etc/bird/bird.conf') }
+          it { is_expected.not_to contain_file(filepath) }
         end
       end
 
@@ -83,7 +93,11 @@ describe 'bird' do
 
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_class('bird::params') }
-        it { is_expected.to contain_package('bird') }
+        if facts[:os]['family'] == 'RedHat'
+          it { is_expected.to contain_package('bird6') }
+        else
+          it { is_expected.to contain_package('bird') }
+        end
         it {
           is_expected.to contain_service('bird').with(
             'ensure'     => 'running',
@@ -95,7 +109,7 @@ describe 'bird' do
         }
 
         it {
-          is_expected.to contain_file('/etc/bird/bird.conf').with(
+          is_expected.to contain_file(filepath).with(
             'source' => 'puppet:///modules/fooboozoo',
             'owner'  => 'root',
             'group'  => 'root',
@@ -114,7 +128,7 @@ describe 'bird' do
         }
 
         it {
-          is_expected.to contain_file('/etc/bird/bird6.conf').with(
+          is_expected.to contain_file(filepathv6).with(
             'source' => 'puppet:///modules/fooboozoo6',
             'owner'  => 'root',
             'group'  => 'root',
@@ -169,8 +183,19 @@ describe 'bird' do
           end
 
           it { is_expected.to compile.with_all_deps }
-          it { is_expected.not_to contain_file('/etc/bird/bird.conf') }
-          it { is_expected.not_to contain_file('/etc/bird/bird6.conf') }
+          it { is_expected.not_to contain_file(filepath) }
+          it { is_expected.not_to contain_file(filepathv6) }
+        end
+        context 'with manage_repo set to true' do
+          let(:params) do
+            {
+              manage_repo: true
+            }
+          end
+
+          it { is_expected.to compile.with_all_deps }
+          it { is_expected.to contain_yumrepo('bird') }
+          it { is_expected.to contain_package('bird') }
         end
       end
     end
