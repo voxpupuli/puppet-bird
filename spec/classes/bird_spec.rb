@@ -9,6 +9,9 @@ describe 'bird' do
     when 'Debian'
       filepath   = '/etc/bird/bird.conf'
       filepathv6 = '/etc/bird/bird6.conf'
+    when 'Archlinux'
+      filepath   = '/etc/bird.conf'
+      filepathv6 = '/etc/bird.conf'
     end
     context "on #{os}" do
       let(:facts) do
@@ -28,7 +31,7 @@ describe 'bird' do
         end
 
         it { is_expected.not_to contain_yumrepo('bird') }
-        it { is_expected.not_to contain_package('bird').with_require('Yumrepo[bird]') }
+        it { is_expected.not_to contain_package('bird').that_requires('Yumrepo[bird]') }
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_class('bird::params') }
         it { is_expected.to contain_package('bird') }
@@ -80,7 +83,7 @@ describe 'bird' do
         end
       end
 
-      context 'with IPv4 and IPv6' do
+      context 'with IPv4 and IPv6', if: facts[:os]['name'] != 'Archlinux' do
         let(:params) do
           {
             config_file_v4: 'puppet:///modules/fooboozoo',
