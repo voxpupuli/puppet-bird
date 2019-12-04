@@ -55,6 +55,8 @@
 #   Bird configuration template for IPv6. This value is a template source, it
 #   will be passed into the template() function.
 #
+# @param manage_repository
+#   Add the upstream repository from CZ.NIC. This is currently only supported for CentOS 7
 # @example IPv4 only
 #   class { 'bird':
 #     config_file_v4 => 'puppet:///modules/bgp/ldn/bird.conf',
@@ -85,9 +87,24 @@ class bird (
   Stdlib::Absolutepath $config_path_v6          = $bird::params::config_path_v6,
   Optional[Stdlib::Filesource] $config_file_v6  = undef,
   Optional[String[1]] $config_template_v6       = undef,
+  Boolean $manage_repository                    = false,
 ) inherits bird::params {
 
-  ensure_packages([$package_name_v4], {'ensure' => 'present'})
+  if $manage_repository {
+    yumrepo{'bird':
+      baseurl  => 'ftp://bird.network.cz/pub/bird/centos/7/x86_64/',
+      descr    => 'Official bird packages from CZ.NIC',
+      enabled  => 1,
+      gpgcheck => 1,
+      gpgkey   => 'ftp://bird.network.cz/pub/bird/centos/7/x86_64/RPM-GPG-KEY-network.cz',
+    }
+    # set a dependency to package resources
+    $dependency = Yumrepo['bird']
+  } else {
+    $dependency = undef
+  }
+
+  ensure_packages([$package_name_v4], {'ensure' => 'present', 'require' => $dependency})
 
   if $manage_service {
     service { $daemon_name_v4:
@@ -129,7 +146,7 @@ class bird (
 
   if $enable_v6 {
 
-    ensure_packages([$package_name_v6], {'ensure' => 'present'})
+    ensure_packages([$package_name_v6], {'ensure' => 'present', 'require' => $dependency})
 
     if $manage_service {
       service { $daemon_name_v6:
