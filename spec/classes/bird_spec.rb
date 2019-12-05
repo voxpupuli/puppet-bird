@@ -33,7 +33,6 @@ describe 'bird' do
         it { is_expected.not_to contain_yumrepo('bird') }
         it { is_expected.not_to contain_package('bird').that_requires('Yumrepo[bird]') }
         it { is_expected.to compile.with_all_deps }
-        it { is_expected.to contain_class('bird::params') }
         it { is_expected.to contain_package('bird') }
         it {
           is_expected.to contain_service('bird').with(
@@ -95,7 +94,6 @@ describe 'bird' do
         end
 
         it { is_expected.to compile.with_all_deps }
-        it { is_expected.to contain_class('bird::params') }
         if facts[:os]['family'] == 'RedHat'
           it { is_expected.to contain_package('bird6') }
         else

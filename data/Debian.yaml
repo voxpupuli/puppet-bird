@@ -1,0 +1,4 @@
+---
+bird::config_path_v4: '/etc/bird/bird.conf'
+bird::config_path_v6: '/etc/bird/bird6.conf'
+bird::package_name_v6: 'bird'

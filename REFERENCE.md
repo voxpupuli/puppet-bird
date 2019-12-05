@@ -5,13 +5,7 @@
 
 **Classes**
 
-_Public Classes_
-
 * [`bird`](#bird): Install and configure bird
-
-_Private Classes_
-
-* `bird::params`: OS dependent parameters
 
 ## Classes
 
@@ -74,8 +68,6 @@ Data type: `String[1]`
 
 The package name used by puppet resource
 
-Default value: $bird::params::package_name_v6
-
 ##### `daemon_name_v4`
 
 Data type: `String[1]`
@@ -98,15 +90,11 @@ Data type: `Stdlib::Absolutepath`
 
 The full path of the v6 configuration file
 
-Default value: $bird::params::config_path_v6
-
 ##### `config_path_v4`
 
 Data type: `Stdlib::Absolutepath`
 
 The full path of the v4 configuration file
-
-Default value: $bird::params::config_path_v4
 
 ##### `enable_v6`
 
