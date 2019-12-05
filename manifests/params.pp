@@ -18,6 +18,11 @@ class bird::params {
       $config_path_v6   = '/etc/bird6.conf'
       $package_name_v6  = 'bird6'
     }
+    'Archlinux': {
+      $config_path_v4   = '/etc/bird.conf'
+      $config_path_v6   = '/etc/bird.conf'
+      $package_name_v6  = 'bird'
+    }
     default: {
       fail("Unsupported osfamily: ${facts['os']['family']}")
     }

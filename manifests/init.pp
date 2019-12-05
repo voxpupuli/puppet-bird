@@ -28,7 +28,7 @@
 #   The full path of the v4 configuration file
 #
 # @param enable_v6
-#   Boolean for enable IPv6 (install bird6 package)
+#   Boolean for enable IPv6 (install bird6 package). Defaults to false and it's only required if you use a legacy distribution that ships bird + bird6. Newer releases have native IPv6 support.
 #
 # @param manage_conf
 #   Boolean, global parameter to disable or enable mangagment of bird configuration files.
@@ -142,6 +142,10 @@ class bird (
   }
 
   if $enable_v6 {
+
+    if $facts['os']['name'] == 'Archlinux' {
+      fail('The bird version in Archlinux does not provide a seperate daemon for IPv6. You cannot explicitly enable it. The default daemon already has IPv6 support')
+    }
 
     ensure_packages([$package_name_v6], {'ensure' => 'present'})
 
