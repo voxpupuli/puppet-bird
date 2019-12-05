@@ -13,6 +13,13 @@ describe 'bird' do
       filepath   = '/etc/bird.conf'
       filepathv6 = '/etc/bird.conf'
     end
+
+    msg = if facts[:os]['name'] == 'Archlinux'
+            %r{The bird version in Archlinux does not provide a seperate daemon for IPv6. You cannot explicitly enable it. The default daemon already has IPv6 support}
+          else
+            %r{either config_file_v6 or config_template_v6 or config_content_v6 parameter must be set}
+          end
+
     context "on #{os}" do
       let(:facts) do
         facts
@@ -197,6 +204,107 @@ describe 'bird' do
           it { is_expected.to compile.with_all_deps }
           it { is_expected.to contain_yumrepo('bird') }
           it { is_expected.to contain_package('bird') }
+        end
+        context 'with manage_repo set to true' do
+          let(:params) do
+            {
+              config_content_v4: 'awesome bird configuration is expected here',
+              config_content_v6: 'awesome bird configuration is expected here',
+              enable_v6: true,
+              manage_conf: true
+
+            }
+          end
+
+          it { is_expected.to compile.with_all_deps }
+          it {
+            is_expected.to contain_file(filepath).with(
+              'content' => 'awesome bird configuration is expected here',
+              'owner'  => 'root',
+              'group'  => 'root',
+              'mode'   => '0644'
+            )
+          }
+          it {
+            is_expected.to contain_file(filepathv6).with(
+              'content' => 'awesome bird configuration is expected here',
+              'owner'  => 'root',
+              'group'  => 'root',
+              'mode'   => '0644'
+            )
+          }
+        end
+        context 'with config_file_v4 and config_template_v4' do
+          let(:params) do
+            {
+              config_file_v4: '/path/to/file',
+              config_template_v4: 'something',
+              manage_conf: true
+            }
+          end
+
+          it { is_expected.to compile.and_raise_error(%r{either config_file_v4 or config_template_v4 or config_content_v4 parameter must be set}) }
+        end
+        context 'with config_file_v4 and config_content_v4' do
+          let(:params) do
+            {
+              config_file_v4: '/path/to/file',
+              config_content_v4: 'content',
+              manage_conf: true
+            }
+          end
+
+          it { is_expected.to compile.and_raise_error(%r{either config_file_v4 or config_template_v4 or config_content_v4 parameter must be set}) }
+        end
+        context 'with config_template_v4 and config_content_v4' do
+          let(:params) do
+            {
+              config_template_v4: '/path/to/file',
+              config_content_v4: 'content',
+              manage_conf: true
+            }
+          end
+
+          it { is_expected.to compile.and_raise_error(%r{either config_file_v4 or config_template_v4 or config_content_v4 parameter must be set}) }
+        end
+        context 'with config_file_v6 and config_template_v6' do
+          let(:params) do
+            {
+              config_file_v4: 'puppet:///modules/fooboozoo',
+              config_file_v6: '/path/to/file',
+              config_template_v6: 'something',
+              manage_conf: true,
+              enable_v6: true
+            }
+          end
+
+          it { is_expected.to compile.and_raise_error(msg) }
+        end
+        context 'with config_file_v6 and config_content_v6' do
+          let(:params) do
+            {
+              config_file_v4: 'puppet:///modules/fooboozoo',
+              config_file_v6: '/path/to/file',
+              config_content_v6: 'content',
+              manage_conf: true,
+              enable_v6: true
+            }
+          end
+
+          it { is_expected.to compile.and_raise_error(msg) }
+        end
+        context 'with config_template_v6 and config_content_v6' do
+          let(:params) do
+            {
+              config_file_v4: 'puppet:///modules/fooboozoo',
+              config_template_v6: '/path/to/file',
+              config_content_v6: 'content',
+              manage_conf: true,
+              enable_v6: true
+            }
+          end
+
+          it { is_expected.to compile.and_raise_error(msg) }
         end
       end
     end

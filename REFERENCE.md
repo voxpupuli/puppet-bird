@@ -177,3 +177,19 @@ Add the upstream repository from CZ.NIC. This is currently only supported for Ce
 
 Default value: `false`
 
+##### `config_content_v4`
+
+Data type: `Optional[String[1]]`
+
+A string that will be used for the bird config file
+
+Default value: `undef`
+
+##### `config_content_v6`
+
+Data type: `Optional[String[1]]`
+
+A string that will be used for the bird6 config file
+
+Default value: `undef`
+
