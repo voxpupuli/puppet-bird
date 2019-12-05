@@ -70,9 +70,11 @@
 #   }
 #
 class bird (
+  Stdlib::Absolutepath $config_path_v4,
+  String[1] $package_name_v6,
+  Stdlib::Absolutepath $config_path_v6,
   String[1] $daemon_name_v4                     = 'bird',
   String[1] $package_name_v4                    = 'bird',
-  Stdlib::Absolutepath $config_path_v4          = $bird::params::config_path_v4,
   Optional[Stdlib::Filesource] $config_file_v4  = undef,
   Optional[String[1]] $config_template_v4       = undef,
   Boolean $enable_v6                            = false,
@@ -83,12 +85,10 @@ class bird (
   Stdlib::Ensure::Service $service_v4_ensure    = 'running',
   Boolean $service_v4_enable                    = false,
   String[1] $daemon_name_v6                     = 'bird6',
-  String[1] $package_name_v6                    = $bird::params::package_name_v6,
-  Stdlib::Absolutepath $config_path_v6          = $bird::params::config_path_v6,
   Optional[Stdlib::Filesource] $config_file_v6  = undef,
   Optional[String[1]] $config_template_v6       = undef,
   Boolean $manage_repo                          = false,
-) inherits bird::params {
+) {
 
   if $manage_repo {
     yumrepo{'bird':
