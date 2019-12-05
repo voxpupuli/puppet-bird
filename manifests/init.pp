@@ -57,6 +57,13 @@
 #
 # @param manage_repo
 #   Add the upstream repository from CZ.NIC. This is currently only supported for CentOS 7
+#
+# @param config_content_v4
+#   A string that will be used for the bird config file
+#
+# @param config_content_v6
+#   A string that will be used for the bird6 config file
+#
 # @example IPv4 only
 #   class { 'bird':
 #     config_file_v4 => 'puppet:///modules/bgp/ldn/bird.conf',
@@ -88,6 +95,8 @@ class bird (
   Optional[Stdlib::Filesource] $config_file_v6  = undef,
   Optional[String[1]] $config_template_v6       = undef,
   Boolean $manage_repo                          = false,
+  Optional[String[1]] $config_content_v4        = undef,
+  Optional[String[1]] $config_content_v6        = undef
 ) {
 
   if $manage_repo {
@@ -116,12 +125,14 @@ class bird (
   }
 
   if $manage_conf {
-    unless $config_file_v4 or $config_template_v4 {
-      fail("either config_file_v4 or config_template_v4 parameter must be set (config_file_v4: ${config_file_v4}, config_template_v4: ${config_template_v4})")
+    if ($config_file_v4 and $config_template_v4) or ($config_file_v4 and $config_content_v4) or ( $config_template_v4 and $config_content_v4) {
+      fail("either config_file_v4 or config_template_v4 or config_content_v4 parameter must be set (config_file_v4: ${config_file_v4}, config_template_v4: ${config_template_v4}, config_content_v4: ${config_content_v4})")
     }
 
     if $config_file_v4 {
       $config_file_v4_content = undef
+    } elsif $config_content_v4 {
+      $config_file_v4_content = $config_content_v4
     } else {
       $config_file_v4_content = template($config_template_v4)
     }
@@ -162,12 +173,14 @@ class bird (
     }
 
     if $manage_conf {
-      unless $config_file_v6 or $config_template_v6 {
-        fail("either config_file_v6 or config_template_v6 parameter must be set (config_file_v6: ${config_file_v6}, config_template_v6: ${config_template_v6})")
+      if ($config_file_v6 and $config_template_v6) or ($config_file_v6 and $config_content_v6) or ( $config_template_v6 and $config_content_v6) {
+        fail("either config_file_v6 or config_template_v6 or config_content_v6 parameter must be set (config_file_v6: ${config_file_v6}, config_template_v6: ${config_template_v6}), config_content_v6: ${config_content_v6}")
       }
 
       if $config_file_v6 {
         $config_file_v6_content = undef
+      } elsif $config_content_v6 {
+        $config_file_v6_content = $config_content_v6
       } else {
         $config_file_v6_content = template($config_template_v6)
       }
