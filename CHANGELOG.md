@@ -4,7 +4,27 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v2.0.0](https://github.com/voxpupuli/puppet-bird/tree/v2.0.0) (2019-03-09)
+## [v3.0.0](https://github.com/voxpupuli/puppet-bird/tree/v3.0.0) (2019-12-05)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-bird/compare/v2.0.0...v3.0.0)
+
+**Breaking changes:**
+
+- Drop Ubuntu 14.04, use more data types and drop UNSET defaults [\#32](https://github.com/voxpupuli/puppet-bird/pull/32) ([ekohl](https://github.com/ekohl))
+
+**Implemented enhancements:**
+
+- Implement config\_content parameter [\#36](https://github.com/voxpupuli/puppet-bird/pull/36) ([bastelfreak](https://github.com/bastelfreak))
+- convert to data-in-modules [\#35](https://github.com/voxpupuli/puppet-bird/pull/35) ([bastelfreak](https://github.com/bastelfreak))
+- Add Archlinux support and REFERENCE.md [\#34](https://github.com/voxpupuli/puppet-bird/pull/34) ([bastelfreak](https://github.com/bastelfreak))
+- Add CentOS 7 support [\#33](https://github.com/voxpupuli/puppet-bird/pull/33) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- Remove duplicate CONTRIBUTING.md file [\#30](https://github.com/voxpupuli/puppet-bird/pull/30) ([dhoppe](https://github.com/dhoppe))
+- Clean up acceptance spec helper [\#29](https://github.com/voxpupuli/puppet-bird/pull/29) ([ekohl](https://github.com/ekohl))
+
+## [v2.0.0](https://github.com/voxpupuli/puppet-bird/tree/v2.0.0) (2019-03-14)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-bird/compare/v1.2.1...v2.0.0)
 
