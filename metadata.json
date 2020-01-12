@@ -9,17 +9,7 @@
   "issues_url": "https://github.com/voxpupuli/puppet-bird/issues",
   "operatingsystem_support": [
     {
-      "operatingsystem": "Debian",
-      "operatingsystemrelease": [
-        "8",
-        "9"
-      ]
-    },
-    {
-      "operatingsystem": "Ubuntu",
-      "operatingsystemrelease": [
-        "16.04"
-      ]
+      "operatingsystem": "Archlinux"
     },
     {
       "operatingsystem": "CentOS",
@@ -28,7 +18,19 @@
       ]
     },
     {
-      "operatingsystem": "Archlinux"
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "8",
+        "9",
+        "10"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "16.04",
+        "18.04"
+      ]
     }
   ],
   "description": "Module to install/manage Bird internet routing daemon using puppet",
