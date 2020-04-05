@@ -1,35 +1,22 @@
 require 'spec_helper_acceptance'
 
 describe 'bird class' do
-  context 'default parameters' do
-    # Using puppet_apply as a helper
-    it 'works idempotently with no errors' do
-      # The RedHat package only provides an example configuration for IPv4
-      # Therefore we can't start the daemon for IPv6
-      # rubocop:disable Style/ConditionalAssignment
-      if fact('os.family') == 'RedHat'
-        pp =  <<-EOS
-        class { 'bird':
-          manage_service => true,
-          service_v4_enable => true,
-          enable_v6 => true,
-          service_v6_enable => true,
-          service_v6_ensure => 'stopped',
-        }
-        EOS
-      else
-        pp =  <<-EOS
-        class { 'bird':
-          manage_service => true,
-          service_v4_enable => true,
-          enable_v6 => true,
-          service_v6_enable => true,
-        }
-        EOS
-      end
-      # rubocop:enable Style/ConditionalAssignment
+  let(:pp) do
+    # The RedHat package only provides an example configuration for IPv4
+    # Therefore we can't start the daemon for IPv6
+    <<-PUPPET
+      class { 'bird':
+        manage_service    => true,
+        service_v4_enable => true,
+        enable_v6         => true,
+        service_v6_enable => true,
+        service_v6_ensure => bool2str($facts['os']['family'] == 'RedHat', 'stopped', 'running'),
+      }
+    PUPPET
+  end
 
-      # Run it twice and test for idempotency
+  context 'default parameters' do
+    it 'works idempotently with no errors' do
       apply_manifest(pp, catch_failures: true)
       apply_manifest(pp, catch_changes: true)
     end
@@ -43,14 +30,11 @@ describe 'bird class' do
       it { is_expected.to be_running }
     end
 
-    if fact('os.family') == 'RedHat'
-      describe service('bird6') do
-        it { is_expected.to be_enabled }
+    describe service('bird6') do
+      it { is_expected.to be_enabled }
+      if fact('os.family') == 'RedHat'
         it { is_expected.not_to be_running }
-      end
-    else
-      describe service('bird6') do
-        it { is_expected.to be_enabled }
+      else
         it { is_expected.to be_running }
       end
     end
