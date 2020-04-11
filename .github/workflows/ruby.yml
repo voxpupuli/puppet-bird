@@ -17,8 +17,24 @@ jobs:
       uses: actions/setup-ruby@v1
       with:
         ruby-version: 2.6.x
-    - name: Build and test with Rake
+    - name: Setup bundler
       run: |
         gem install bundler
         bundle install --jobs 4 --retry 3 --without system_tests development release
         bundle exec rake lint
+    - name: execute puppet-lint
+      run: bundle exec rake lint
+    - name: Check syntax of Ruby files and call :syntax and :metadata_lint
+      run: bundle exec rake validate
+    - name: Fails if symlinks are present in directory
+      run: bundle exec rake check:symlinks
+    - name: Fails if .pp files present in tests folder
+      run: bundle exec rake check:test_file
+    - name: Check syntax of Ruby files and call :syntax and :metadata_lint
+      run: bundle exec rake check:dot_underscore
+    - name: Check syntax of Ruby files and call :syntax and :metadata_lint
+      run: bundle exec rake check:git_ignore
+    - name: check for trailing whitespace
+      run: bundle exec rake check:trailing_whitespace
+    - name: Run spec tests in parallel and clean the fixtures directory if successful
+      run: bundle exec rake parallel_spec

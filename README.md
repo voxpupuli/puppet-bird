@@ -58,4 +58,4 @@ See [CHANGELOG](https://github.com/voxpupuli/puppet-bird/blob/master/CHANGELOG.m
 
 ## Authors
 
-This module got migrated from sbadia to Vox Pupuli
+This module got migrated from [sbadia](https://github.com/sbadia) to Vox Pupuli
