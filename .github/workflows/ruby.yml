@@ -37,9 +37,9 @@ jobs:
       run: bundle exec rake check:symlinks
     - name: Fails if .pp files present in tests folder
       run: bundle exec rake check:test_file
-    - name: Check syntax of Ruby files and call :syntax and :metadata_lint
+    - name: Fails if any ._ files are present in directory
       run: bundle exec rake check:dot_underscore
-    - name: Check syntax of Ruby files and call :syntax and :metadata_lint
+    - name: Fails if directories contain the files specified in .gitignore
       run: bundle exec rake check:git_ignore
     - name: check for trailing whitespace
       run: bundle exec rake check:trailing_whitespace
