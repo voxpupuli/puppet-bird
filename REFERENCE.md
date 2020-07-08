@@ -193,3 +193,15 @@ A string that will be used for the bird6 config file
 
 Default value: `undef`
 
+##### `v4_path`
+
+Data type: `Stdlib::Absolutepath`
+
+Path to the bird binary
+
+##### `v6_path`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Optional path to the bird6 binary. Only set on legacy operating systems that run bird1
+

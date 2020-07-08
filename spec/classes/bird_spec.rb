@@ -96,7 +96,8 @@ describe 'bird' do
             enable_v6:       true,
             config_file_v6:  'puppet:///modules/fooboozoo6',
             manage_conf: true,
-            manage_service: true
+            manage_service: true,
+            v6_path: '/usr/sbin/bird6'
           }
         end
 
@@ -211,8 +212,8 @@ describe 'bird' do
               config_content_v4: 'awesome bird configuration is expected here',
               config_content_v6: 'awesome bird configuration is expected here',
               enable_v6: true,
-              manage_conf: true
-
+              manage_conf: true,
+              v6_path: '/usr/sbin/bird6'
             }
           end
 
@@ -256,17 +257,6 @@ describe 'bird' do
 
           it { is_expected.to compile.and_raise_error(%r{either config_file_v4 or config_template_v4 or config_content_v4 parameter must be set}) }
         end
-        context 'with config_template_v4 and config_content_v4' do
-          let(:params) do
-            {
-              config_template_v4: '/path/to/file',
-              config_content_v4: 'content',
-              manage_conf: true
-            }
-          end
-
-          it { is_expected.to compile.and_raise_error(%r{either config_file_v4 or config_template_v4 or config_content_v4 parameter must be set}) }
-        end
         context 'with config_file_v6 and config_template_v6' do
           let(:params) do
             {
@@ -274,33 +264,8 @@ describe 'bird' do
               config_file_v6: '/path/to/file',
               config_template_v6: 'something',
               manage_conf: true,
-              enable_v6: true
-            }
-          end
-
-          it { is_expected.to compile.and_raise_error(msg) }
-        end
-        context 'with config_file_v6 and config_content_v6' do
-          let(:params) do
-            {
-              config_file_v4: 'puppet:///modules/fooboozoo',
-              config_file_v6: '/path/to/file',
-              config_content_v6: 'content',
-              manage_conf: true,
-              enable_v6: true
-            }
-          end
-
-          it { is_expected.to compile.and_raise_error(msg) }
-        end
-        context 'with config_template_v6 and config_content_v6' do
-          let(:params) do
-            {
-              config_file_v4: 'puppet:///modules/fooboozoo',
-              config_template_v6: '/path/to/file',
-              config_content_v6: 'content',
-              manage_conf: true,
-              enable_v6: true
+              enable_v6: true,
+              v6_path: '/usr/sbin/bird6'
             }
           end
 
@@ -316,7 +281,8 @@ describe 'bird' do
             manage_conf: true,
             manage_service: true,
             service_v6_enable: true,
-            service_v4_enable: true
+            service_v4_enable: true,
+            v6_path: '/usr/sbin/bird'
           }
         end
 
