@@ -307,6 +307,21 @@ describe 'bird' do
           it { is_expected.to compile.and_raise_error(msg) }
         end
       end
+      context 'with IPv4 and IPv6 and managed services', if: facts[:os]['name'] != 'Archlinux' do
+        let(:params) do
+          {
+            config_file_v4: 'puppet:///modules/fooboozoo',
+            enable_v6:       true,
+            config_file_v6:  'puppet:///modules/fooboozoo6',
+            manage_conf: true,
+            manage_service: true,
+            service_v6_enable: true,
+            service_v4_enable: true
+          }
+        end
+
+        it { is_expected.to compile.with_all_deps }
+      end
     end
   end
 end
