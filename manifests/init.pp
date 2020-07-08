@@ -64,6 +64,12 @@
 # @param config_content_v6
 #   A string that will be used for the bird6 config file
 #
+# @param v4_path
+#   Path to the bird binary
+#
+# @param v6_path
+#   Optional path to the bird6 binary. Only set on legacy operating systems that run bird1
+#
 # @example IPv4 only
 #   class { 'bird':
 #     config_file_v4 => 'puppet:///modules/bgp/ldn/bird.conf',
@@ -80,6 +86,8 @@ class bird (
   Stdlib::Absolutepath $config_path_v4,
   String[1] $package_name_v6,
   Stdlib::Absolutepath $config_path_v6,
+  Stdlib::Absolutepath $v4_path,
+  Optional[Stdlib::Absolutepath] $v6_path,
   String[1] $daemon_name_v4                     = 'bird',
   String[1] $package_name_v4                    = 'bird',
   Optional[Stdlib::Filesource] $config_file_v4  = undef,
@@ -138,13 +146,14 @@ class bird (
     }
 
     file { $config_path_v4:
-      ensure  => file,
-      source  => $config_file_v4,
-      content => $config_file_v4_content,
-      owner   => root,
-      group   => root,
-      mode    => '0644',
-      require => Package[$package_name_v4];
+      ensure       => file,
+      source       => $config_file_v4,
+      content      => $config_file_v4_content,
+      owner        => root,
+      group        => root,
+      mode         => '0644',
+      validate_cmd => "${v4_path} -p -c %",
+      require      => Package[$package_name_v4];
     }
 
     if $manage_service {
@@ -185,14 +194,16 @@ class bird (
         $config_file_v6_content = template($config_template_v6)
       }
 
+      assert_type(Stdlib::Absolutepath, $v6_path)
       file { $config_path_v6:
-        ensure  => file,
-        source  => $config_file_v6,
-        content => $config_file_v6_content,
-        owner   => root,
-        group   => root,
-        mode    => '0644',
-        require => Package[$package_name_v6];
+        ensure       => file,
+        source       => $config_file_v6,
+        content      => $config_file_v6_content,
+        owner        => root,
+        group        => root,
+        mode         => '0644',
+        validate_cmd => "${v6_path} -p -c %",
+        require      => Package[$package_name_v6];
       }
 
       if $manage_service {
