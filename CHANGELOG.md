@@ -4,6 +4,25 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v3.1.0](https://github.com/voxpupuli/puppet-bird/tree/v3.1.0) (2020-07-09)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-bird/compare/v3.0.0...v3.1.0)
+
+**Implemented enhancements:**
+
+- Implement CentOS 6 support [\#54](https://github.com/voxpupuli/puppet-bird/pull/54) ([bastelfreak](https://github.com/bastelfreak))
+- Validate Bird config before writing it [\#53](https://github.com/voxpupuli/puppet-bird/pull/53) ([bastelfreak](https://github.com/bastelfreak))
+- Add Ubuntu 20 support [\#51](https://github.com/voxpupuli/puppet-bird/pull/51) ([bastelfreak](https://github.com/bastelfreak))
+- Add support for Debian 10 and Ubuntu 18.04 [\#42](https://github.com/voxpupuli/puppet-bird/pull/42) ([dhoppe](https://github.com/dhoppe))
+
+**Merged pull requests:**
+
+- increase test coverage [\#52](https://github.com/voxpupuli/puppet-bird/pull/52) ([bastelfreak](https://github.com/bastelfreak))
+- Add link to former maintainer to README.md [\#47](https://github.com/voxpupuli/puppet-bird/pull/47) ([bastelfreak](https://github.com/bastelfreak))
+- Use voxpupuli-acceptance [\#46](https://github.com/voxpupuli/puppet-bird/pull/46) ([ekohl](https://github.com/ekohl))
+- Remove unused nodesets + unify the acceptance tests [\#45](https://github.com/voxpupuli/puppet-bird/pull/45) ([ekohl](https://github.com/ekohl))
+- update repo links to https [\#43](https://github.com/voxpupuli/puppet-bird/pull/43) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v3.0.0](https://github.com/voxpupuli/puppet-bird/tree/v3.0.0) (2019-12-05)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-bird/compare/v2.0.0...v3.0.0)
