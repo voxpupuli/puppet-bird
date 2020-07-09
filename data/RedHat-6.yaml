@@ -1,3 +1,4 @@
 ---
 bird::v4_path: '/usr/sbin/bird'
 bird::v6_path: '/usr/sbin/bird6'
+bird::enable_v6: true

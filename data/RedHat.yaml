@@ -4,3 +4,4 @@ bird::config_path_v6: '/etc/bird6.conf'
 bird::package_name_v6: 'bird6'
 bird::v4_path: '/usr/sbin/bird'
 bird::v6_path: ~
+bird::enable_v6: false

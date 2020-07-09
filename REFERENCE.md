@@ -102,8 +102,6 @@ Data type: `Boolean`
 
 Boolean for enable IPv6 (install bird6 package). Defaults to false and it's only required if you use a legacy distribution that ships bird + bird6. Newer releases have native IPv6 support.
 
-Default value: `false`
-
 ##### `manage_conf`
 
 Data type: `Boolean`
