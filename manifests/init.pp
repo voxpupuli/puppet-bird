@@ -106,9 +106,8 @@ class bird (
   Optional[String[1]] $config_content_v4        = undef,
   Optional[String[1]] $config_content_v6        = undef
 ) {
-
   if $manage_repo {
-    yumrepo{'bird':
+    yumrepo { 'bird':
       baseurl  => 'ftp://bird.network.cz/pub/bird/centos/7/x86_64/',
       descr    => 'Official bird packages from CZ.NIC',
       enabled  => 1,
@@ -118,7 +117,7 @@ class bird (
     Yumrepo['bird'] -> Package <| name == $package_name_v4 or name == $package_name_v6 |>
   }
 
-  ensure_packages([$package_name_v4], {'ensure' => 'present'})
+  ensure_packages([$package_name_v4], { 'ensure' => 'present' })
 
   if $manage_service {
     service { $daemon_name_v4:
@@ -162,12 +161,11 @@ class bird (
   }
 
   if $enable_v6 {
-
     if $facts['os']['name'] == 'Archlinux' {
       fail('The bird version in Archlinux does not provide a seperate daemon for IPv6. You cannot explicitly enable it. The default daemon already has IPv6 support')
     }
 
-    ensure_packages([$package_name_v6], {'ensure' => 'present'})
+    ensure_packages([$package_name_v6], { 'ensure' => 'present' })
 
     if $manage_service {
       service { $daemon_name_v6:
@@ -211,5 +209,4 @@ class bird (
       }
     }
   }
-
 }
