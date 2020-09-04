@@ -125,7 +125,6 @@ class bird (
       enable     => $service_v4_enable,
       hasrestart => false,
       restart    => '/usr/sbin/birdc configure',
-      hasstatus  => false,
       pattern    => $daemon_name_v4,
       require    => Package[$package_name_v4];
     }
