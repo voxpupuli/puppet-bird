@@ -44,7 +44,6 @@ describe 'bird' do
         it {
           is_expected.to contain_service('bird').with(
             'ensure'     => 'running',
-            'hasstatus'  => 'false',
             'pattern'    => 'bird',
             'hasrestart' => 'false',
             'restart'    => '/usr/sbin/birdc configure'
@@ -64,7 +63,6 @@ describe 'bird' do
             is_expected.to contain_service('bird').with(
               'ensure'     => 'stopped',
               'enable'     => 'false',
-              'hasstatus'  => 'false',
               'pattern'    => 'bird',
               'hasrestart' => 'false',
               'restart'    => '/usr/sbin/birdc configure'
@@ -110,7 +108,6 @@ describe 'bird' do
         it {
           is_expected.to contain_service('bird').with(
             'ensure'     => 'running',
-            'hasstatus'  => 'false',
             'pattern'    => 'bird',
             'hasrestart' => 'false',
             'restart'    => '/usr/sbin/birdc configure'
@@ -129,7 +126,6 @@ describe 'bird' do
         it {
           is_expected.to contain_service('bird6').with(
             'ensure'     => 'running',
-            'hasstatus'  => 'false',
             'pattern'    => 'bird6',
             'hasrestart' => 'false',
             'restart'    => '/usr/sbin/birdc6 configure'
@@ -165,7 +161,6 @@ describe 'bird' do
             is_expected.to contain_service('bird').with(
               'ensure'     => 'stopped',
               'enable'     => 'false',
-              'hasstatus'  => 'false',
               'pattern'    => 'bird',
               'hasrestart' => 'false',
               'restart'    => '/usr/sbin/birdc configure'
@@ -175,7 +170,6 @@ describe 'bird' do
             is_expected.to contain_service('bird6').with(
               'ensure'     => 'stopped',
               'enable'     => 'false',
-              'hasstatus'  => 'false',
               'pattern'    => 'bird6',
               'hasrestart' => 'false',
               'restart'    => '/usr/sbin/birdc6 configure'
