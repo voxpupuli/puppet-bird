@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v3.1.1](https://github.com/voxpupuli/puppet-bird/tree/v3.1.1) (2020-09-04)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-bird/compare/v3.1.0...v3.1.1)
+
+**Fixed bugs:**
+
+- Use service status command to determine of bird is running [\#57](https://github.com/voxpupuli/puppet-bird/pull/57) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- modulesync 3.0.0 & puppet-lint updates [\#56](https://github.com/voxpupuli/puppet-bird/pull/56) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v3.1.0](https://github.com/voxpupuli/puppet-bird/tree/v3.1.0) (2020-07-09)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-bird/compare/v3.0.0...v3.1.0)
