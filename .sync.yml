@@ -10,3 +10,7 @@
     - set: ubuntu1604-64
     - set: ubuntu1804-64
     - set: ubuntu2004-64
+Gemfile:
+  optional:
+    ':test':
+      - gem: puppet-lint-param-docs
