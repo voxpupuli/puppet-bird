@@ -21,6 +21,8 @@ Support: IPv4, IPv6, Multiple routing tables, BGP, RIP, OSPF, Static routes, IPv
 
 ## Usage
 
+A basic example fortwo config files, one for the ipv4 instance and one for the ipv6 instance of bird 1:
+
 ```puppet
 class { 'bird':
   enable_v6       => true,
@@ -29,17 +31,20 @@ class { 'bird':
 }
 ```
 
+You can also use the `bird::snippet` defined resource to manage parts of the
+configuration. For example:
+
+```puppet
+bird::snippet {'AS1234':
+  content => $content,
+}
+```
+
+This will run the bird validation and reload it.
+
 ## Parameters
 
-* `enable_v6`: Boolean, enable or disable IPv6 (install bird6 package).
-* `manage_conf`: Boolean, enable or disable bird configuration setup.
-* `manage_service`: Boolean, enable or disable bird service setup.
-* `config_file_v4`: Location of IPv4 bird configuration.
-* `service_v4_ensure`: State of IPv4 service (running/stopped).
-* `service_v4_enable`: Boolean, run Bird V4 on boot.
-* `config_file_v6`: Location of IPv6 bird configuration.
-* `service_v6_ensure`: State of IPv6 service (running/stopped).
-* `service_v6_enable`: Boolean, run Bird V6 on boot.
+All parameters are documented in the [REFERENCE.md](./REFERENCE.md)
 
 ## Dependency
 
