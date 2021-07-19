@@ -8,9 +8,15 @@
 
 * [`bird`](#bird): Install and configure bird
 
+### Defined types
+
+* [`bird::snippet`](#birdsnippet): manage a partial bird config file
+on setups with many peers it's common to save each peer in a single file.
+This is possible with this defined resource. Your bird config needs to contain an include statement!
+
 ## Classes
 
-### `bird`
+### <a name="bird"></a>`bird`
 
 Install and configure bird
 
@@ -36,9 +42,32 @@ class { 'bird':
 
 #### Parameters
 
-The following parameters are available in the `bird` class.
+The following parameters are available in the `bird` class:
 
-##### `config_file_v4`
+* [`config_file_v4`](#config_file_v4)
+* [`config_template_v4`](#config_template_v4)
+* [`daemon_name_v6`](#daemon_name_v6)
+* [`package_name_v6`](#package_name_v6)
+* [`daemon_name_v4`](#daemon_name_v4)
+* [`package_name_v4`](#package_name_v4)
+* [`config_path_v6`](#config_path_v6)
+* [`config_path_v4`](#config_path_v4)
+* [`enable_v6`](#enable_v6)
+* [`manage_conf`](#manage_conf)
+* [`manage_service`](#manage_service)
+* [`service_v6_ensure`](#service_v6_ensure)
+* [`service_v6_enable`](#service_v6_enable)
+* [`service_v4_ensure`](#service_v4_ensure)
+* [`service_v4_enable`](#service_v4_enable)
+* [`config_file_v6`](#config_file_v6)
+* [`config_template_v6`](#config_template_v6)
+* [`manage_repo`](#manage_repo)
+* [`config_content_v4`](#config_content_v4)
+* [`config_content_v6`](#config_content_v6)
+* [`v4_path`](#v4_path)
+* [`v6_path`](#v6_path)
+
+##### <a name="config_file_v4"></a>`config_file_v4`
 
 Data type: `Optional[Stdlib::Filesource]`
 
@@ -46,7 +75,7 @@ Bird configuration file for IPv4.
 
 Default value: ``undef``
 
-##### `config_template_v4`
+##### <a name="config_template_v4"></a>`config_template_v4`
 
 Data type: `Optional[String[1]]`
 
@@ -55,7 +84,7 @@ will be passed into the template() function.
 
 Default value: ``undef``
 
-##### `daemon_name_v6`
+##### <a name="daemon_name_v6"></a>`daemon_name_v6`
 
 Data type: `String[1]`
 
@@ -63,13 +92,13 @@ The service name used by puppet resource
 
 Default value: `'bird6'`
 
-##### `package_name_v6`
+##### <a name="package_name_v6"></a>`package_name_v6`
 
 Data type: `String[1]`
 
 The package name used by puppet resource
 
-##### `daemon_name_v4`
+##### <a name="daemon_name_v4"></a>`daemon_name_v4`
 
 Data type: `String[1]`
 
@@ -77,7 +106,7 @@ The service name used by puppet resource
 
 Default value: `'bird'`
 
-##### `package_name_v4`
+##### <a name="package_name_v4"></a>`package_name_v4`
 
 Data type: `String[1]`
 
@@ -85,25 +114,25 @@ The package name used by puppet resource
 
 Default value: `'bird'`
 
-##### `config_path_v6`
+##### <a name="config_path_v6"></a>`config_path_v6`
 
 Data type: `Stdlib::Absolutepath`
 
 The full path of the v6 configuration file
 
-##### `config_path_v4`
+##### <a name="config_path_v4"></a>`config_path_v4`
 
 Data type: `Stdlib::Absolutepath`
 
 The full path of the v4 configuration file
 
-##### `enable_v6`
+##### <a name="enable_v6"></a>`enable_v6`
 
 Data type: `Boolean`
 
 Boolean for enable IPv6 (install bird6 package). Defaults to false and it's only required if you use a legacy distribution that ships bird + bird6. Newer releases have native IPv6 support.
 
-##### `manage_conf`
+##### <a name="manage_conf"></a>`manage_conf`
 
 Data type: `Boolean`
 
@@ -111,7 +140,7 @@ Boolean, global parameter to disable or enable mangagment of bird configuration 
 
 Default value: ``false``
 
-##### `manage_service`
+##### <a name="manage_service"></a>`manage_service`
 
 Data type: `Boolean`
 
@@ -119,7 +148,7 @@ Boolean, global parameter to disable or enable mangagment of bird service.
 
 Default value: ``false``
 
-##### `service_v6_ensure`
+##### <a name="service_v6_ensure"></a>`service_v6_ensure`
 
 Data type: `Stdlib::Ensure::Service`
 
@@ -127,7 +156,7 @@ Bird IPv6 daemon ensure (shoud be running or stopped).
 
 Default value: `'running'`
 
-##### `service_v6_enable`
+##### <a name="service_v6_enable"></a>`service_v6_enable`
 
 Data type: `Boolean`
 
@@ -135,7 +164,7 @@ Boolean, enabled param of Bird IPv6 service (run at boot time).
 
 Default value: ``false``
 
-##### `service_v4_ensure`
+##### <a name="service_v4_ensure"></a>`service_v4_ensure`
 
 Data type: `Stdlib::Ensure::Service`
 
@@ -143,7 +172,7 @@ Bird IPv4 daemon ensure (shoud be running or stopped).
 
 Default value: `'running'`
 
-##### `service_v4_enable`
+##### <a name="service_v4_enable"></a>`service_v4_enable`
 
 Data type: `Boolean`
 
@@ -151,7 +180,7 @@ Boolean, enabled param of Bird IPv4 service (run at boot time).
 
 Default value: ``false``
 
-##### `config_file_v6`
+##### <a name="config_file_v6"></a>`config_file_v6`
 
 Data type: `Optional[Stdlib::Filesource]`
 
@@ -159,7 +188,7 @@ Bird configuration file for IPv6.
 
 Default value: ``undef``
 
-##### `config_template_v6`
+##### <a name="config_template_v6"></a>`config_template_v6`
 
 Data type: `Optional[String[1]]`
 
@@ -168,7 +197,7 @@ will be passed into the template() function.
 
 Default value: ``undef``
 
-##### `manage_repo`
+##### <a name="manage_repo"></a>`manage_repo`
 
 Data type: `Boolean`
 
@@ -176,7 +205,7 @@ Add the upstream repository from CZ.NIC. This is currently only supported for Ce
 
 Default value: ``false``
 
-##### `config_content_v4`
+##### <a name="config_content_v4"></a>`config_content_v4`
 
 Data type: `Optional[String[1]]`
 
@@ -184,7 +213,7 @@ A string that will be used for the bird config file
 
 Default value: ``undef``
 
-##### `config_content_v6`
+##### <a name="config_content_v6"></a>`config_content_v6`
 
 Data type: `Optional[String[1]]`
 
@@ -192,15 +221,74 @@ A string that will be used for the bird6 config file
 
 Default value: ``undef``
 
-##### `v4_path`
+##### <a name="v4_path"></a>`v4_path`
 
 Data type: `Stdlib::Absolutepath`
 
 Path to the bird binary
 
-##### `v6_path`
+##### <a name="v6_path"></a>`v6_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Optional path to the bird6 binary. Only set on legacy operating systems that run bird1
+
+## Defined types
+
+### <a name="birdsnippet"></a>`bird::snippet`
+
+manage a partial bird config file
+on setups with many peers it's common to save each peer in a single file.
+This is possible with this defined resource. Your bird config needs to contain an include statement!
+
+#### Examples
+
+##### 
+
+```puppet
+bird::snippet { 'AS4242420181':
+ content => "protocol bgp AS4242420181 from dnpeers {\n  neighbor fe80::181:1%as20181 as 4242420181;\n}\n",
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `bird::snippet` defined type:
+
+* [`manage_v6`](#manage_v6)
+* [`validate`](#validate)
+* [`content`](#content)
+* [`source`](#source)
+
+##### <a name="manage_v6"></a>`manage_v6`
+
+Data type: `Boolean`
+
+for bird1, there is a dedicated instance for IPv6. if this boolean is true, the config will be used for that instance
+
+Default value: ``false``
+
+##### <a name="validate"></a>`validate`
+
+Data type: `Boolean`
+
+if the new file should be validated. Beware: For some statements it's not possible to modify and validate them, in those cases you need to disable the check
+
+Default value: ``true``
+
+##### <a name="content"></a>`content`
+
+Data type: `Optional[String[1]]`
+
+The content of the snippet. You cannot provide this in combination with $source.
+
+Default value: ``undef``
+
+##### <a name="source"></a>`source`
+
+Data type: `Optional[Stdlib::Filesource]`
+
+the source of the snippet. You cannot provide this in combination with $content.
+
+Default value: ``undef``
 

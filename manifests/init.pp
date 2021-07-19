@@ -157,6 +157,17 @@ class bird (
     if $manage_service {
       File[$config_path_v4] ~> Service[$daemon_name_v4]
     }
+    # people might want to throw config snippets into the filesystem and include them in the main config
+    # we make this easier with the bird::snippet() defined resource. We create the directory for that here
+    $additional_config_path_v4 = "${dirname($config_path_v4)}/snippets"
+    unless defined(File[$additional_config_path_v4]) {
+      file { $additional_config_path_v4:
+        ensure  => 'directory',
+        owner   => 'root',
+        group   => 'root',
+        require => Package[$package_name_v4];
+      }
+    }
   }
 
   if $enable_v6 {
@@ -205,6 +216,17 @@ class bird (
 
       if $manage_service {
         File[$config_path_v6] ~> Service[$daemon_name_v6]
+      }
+      # people might want to throw config snippets into the filesystem and include them in the main config
+      # we make this easier with the bird::snippet() defined resource. We create the directory for that here
+      $additional_config_path_v6 = "${dirname($config_path_v6)}/snippets"
+      unless defined(File[$additional_config_path_v6]) {
+        file { $additional_config_path_v6:
+          ensure  => 'directory',
+          owner   => 'root',
+          group   => 'root',
+          require => Package[$package_name_v6];
+        }
       }
     }
   }
