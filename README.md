@@ -1,12 +1,13 @@
 # Puppet-bird
 
-[![Build Status](https://travis-ci.org/voxpupuli/puppet-bird.png?branch=master)](https://travis-ci.org/voxpupuli/puppet-bird)
+[![Build Status](https://github.com/voxpupuli/puppet-bird/workflows/CI/badge.svg)](https://github.com/voxpupuli/puppet-bird/actions?query=workflow%3ACI)
+[![Release](https://github.com/voxpupuli/puppet-bird/actions/workflows/release.yml/badge.svg)](https://github.com/voxpupuli/puppet-bird/actions/workflows/release.yml)
 [![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/bird.svg)](https://forge.puppetlabs.com/puppet/bird)
 [![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/bird.svg)](https://forge.puppetlabs.com/puppet/bird)
 [![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/bird.svg)](https://forge.puppetlabs.com/puppet/bird)
 [![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/bird.svg)](https://forge.puppetlabs.com/puppet/bird)
-[![License](http://img.shields.io/:license-gpl3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.html)
-
+[![puppetmodule.info docs](http://www.puppetmodule.info/images/badge.png)](http://www.puppetmodule.info/m/puppet-bird)
+[![GPL v3 License](https://img.shields.io/github/license/voxpupuli/puppet-bird.svg)](LICENSE)
 
 Manage [bird](http://bird.network.cz/) routing daemon via Puppet
 
@@ -52,10 +53,20 @@ class { 'bird':
 
 See [CHANGELOG](https://github.com/voxpupuli/puppet-bird/blob/master/CHANGELOG.md) file.
 
-## Development
+## Contributions
 
-[Feel free to contribute](https://github.com/voxpupuli/puppet-bird/). I'm not a big fan of centralized services like GitHub but I used it to permit easy pull-requests, so show me that's a good idea!
+Contribution is fairly easy:
 
-## Authors
+* Fork the module into your namespace
+* Create a new branch
+* Commit your bugfix or enhancement
+* Write a test for it (maybe start with the test first)
+* Create a pull request
 
-This module got migrated from [sbadia](https://github.com/sbadia) to Vox Pupuli
+Detailed instructions are in the [CONTRIBUTING.md](.github/CONTRIBUTING.md)
+file.
+
+## License and Author
+
+This module got migrated from [sbadia](https://github.com/sbadia) to Vox Pupuli.
+It's licensed with [GPL version 3](LICENSE).
