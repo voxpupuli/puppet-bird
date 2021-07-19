@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v4.0.0](https://github.com/voxpupuli/puppet-bird/tree/v4.0.0) (2021-07-19)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-bird/compare/v3.1.1...v4.0.0)
+
+**Breaking changes:**
+
+- Drop Puppet 5 support [\#67](https://github.com/voxpupuli/puppet-bird/pull/67) ([bastelfreak](https://github.com/bastelfreak))
+- Drop EoL Ubuntu 16.04 support [\#66](https://github.com/voxpupuli/puppet-bird/pull/66) ([bastelfreak](https://github.com/bastelfreak))
+- Drop EoL Debian 8 support [\#65](https://github.com/voxpupuli/puppet-bird/pull/65) ([bastelfreak](https://github.com/bastelfreak))
+- Drop EoL CentOS 6 support [\#64](https://github.com/voxpupuli/puppet-bird/pull/64) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- Add snippet defined resource [\#62](https://github.com/voxpupuli/puppet-bird/pull/62) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- puppetlabs/stdlib: Allow 7.x [\#69](https://github.com/voxpupuli/puppet-bird/pull/69) ([bastelfreak](https://github.com/bastelfreak))
+- reword README.md, update badges [\#68](https://github.com/voxpupuli/puppet-bird/pull/68) ([bastelfreak](https://github.com/bastelfreak))
+- regenerate REFERENCE.md / Add puppet-lint-param-docs linter [\#59](https://github.com/voxpupuli/puppet-bird/pull/59) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v3.1.1](https://github.com/voxpupuli/puppet-bird/tree/v3.1.1) (2020-09-04)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-bird/compare/v3.1.0...v3.1.1)
