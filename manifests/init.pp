@@ -126,7 +126,7 @@ class bird (
       hasrestart => false,
       restart    => '/usr/sbin/birdc configure',
       pattern    => $daemon_name_v4,
-      require    => Package[$package_name_v4];
+      require    => Package[$package_name_v4],
     }
   }
 
@@ -151,7 +151,7 @@ class bird (
       group        => root,
       mode         => '0644',
       validate_cmd => "${v4_path} -p -c %",
-      require      => Package[$package_name_v4];
+      require      => Package[$package_name_v4],
     }
 
     if $manage_service {
@@ -165,7 +165,7 @@ class bird (
         ensure  => 'directory',
         owner   => 'root',
         group   => 'root',
-        require => Package[$package_name_v4];
+        require => Package[$package_name_v4],
       }
     }
   }
@@ -185,7 +185,7 @@ class bird (
         restart    => '/usr/sbin/birdc6 configure',
         hasstatus  => false,
         pattern    => $daemon_name_v6,
-        require    => Package[$package_name_v6];
+        require    => Package[$package_name_v6],
       }
     }
 
@@ -211,7 +211,7 @@ class bird (
         group        => root,
         mode         => '0644',
         validate_cmd => "${v6_path} -p -c %",
-        require      => Package[$package_name_v6];
+        require      => Package[$package_name_v6],
       }
 
       if $manage_service {
@@ -225,7 +225,7 @@ class bird (
           ensure  => 'directory',
           owner   => 'root',
           group   => 'root',
-          require => Package[$package_name_v6];
+          require => Package[$package_name_v6],
         }
       }
     }
