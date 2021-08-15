@@ -70,6 +70,9 @@
 # @param v6_path
 #   Optional path to the bird6 binary. Only set on legacy operating systems that run bird1
 #
+# @param purge_unmanaged_snippets
+#   The module won't purge unmanaged snippets by default. By enabling this, Puppet will purge all of them except the ones created with bird::snippet()
+#
 # @example IPv4 only
 #   class { 'bird':
 #     config_file_v4 => 'puppet:///modules/bgp/ldn/bird.conf',
@@ -104,8 +107,14 @@ class bird (
   Optional[String[1]] $config_template_v6       = undef,
   Boolean $manage_repo                          = false,
   Optional[String[1]] $config_content_v4        = undef,
-  Optional[String[1]] $config_content_v6        = undef
+  Optional[String[1]] $config_content_v6        = undef,
+  Boolean $purge_unmanaged_snippets             = false,
 ) {
+  if $purge_unmanaged_snippets {
+    $snippet_hash = { 'recurse' => true, 'purge' => true }
+  } else {
+    $snippet_hash = {}
+  }
   if $manage_repo {
     yumrepo { 'bird':
       baseurl  => 'ftp://bird.network.cz/pub/bird/centos/7/x86_64/',
@@ -154,18 +163,20 @@ class bird (
       require      => Package[$package_name_v4],
     }
 
-    if $manage_service {
-      File[$config_path_v4] ~> Service[$daemon_name_v4]
-    }
     # people might want to throw config snippets into the filesystem and include them in the main config
     # we make this easier with the bird::snippet() defined resource. We create the directory for that here
     $additional_config_path_v4 = "${dirname($config_path_v4)}/snippets"
+    if $manage_service {
+      File[$config_path_v4] ~> Service[$daemon_name_v4]
+      File[$additional_config_path_v4] ~> Service[$daemon_name_v4]
+    }
     unless defined(File[$additional_config_path_v4]) {
       file { $additional_config_path_v4:
         ensure  => 'directory',
         owner   => 'root',
         group   => 'root',
         require => Package[$package_name_v4],
+        *       => $snippet_hash,
       }
     }
   }
@@ -214,18 +225,20 @@ class bird (
         require      => Package[$package_name_v6],
       }
 
-      if $manage_service {
-        File[$config_path_v6] ~> Service[$daemon_name_v6]
-      }
       # people might want to throw config snippets into the filesystem and include them in the main config
       # we make this easier with the bird::snippet() defined resource. We create the directory for that here
       $additional_config_path_v6 = "${dirname($config_path_v6)}/snippets"
+      if $manage_service {
+        File[$config_path_v6] ~> Service[$daemon_name_v6]
+        File[$additional_config_path_v6] ~> Service[$daemon_name_v6]
+      }
       unless defined(File[$additional_config_path_v6]) {
         file { $additional_config_path_v6:
           ensure  => 'directory',
           owner   => 'root',
           group   => 'root',
           require => Package[$package_name_v6],
+          *       => $snippet_hash,
         }
       }
     }

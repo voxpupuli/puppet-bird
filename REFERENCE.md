@@ -66,6 +66,7 @@ The following parameters are available in the `bird` class:
 * [`config_content_v6`](#config_content_v6)
 * [`v4_path`](#v4_path)
 * [`v6_path`](#v6_path)
+* [`purge_unmanaged_snippets`](#purge_unmanaged_snippets)
 
 ##### <a name="config_file_v4"></a>`config_file_v4`
 
@@ -232,6 +233,14 @@ Path to the bird binary
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Optional path to the bird6 binary. Only set on legacy operating systems that run bird1
+
+##### <a name="purge_unmanaged_snippets"></a>`purge_unmanaged_snippets`
+
+Data type: `Boolean`
+
+The module won't purge unmanaged snippets by default. By enabling this, Puppet will purge all of them except the ones created with bird::snippet()
+
+Default value: ``true``
 
 ## Defined types
 
