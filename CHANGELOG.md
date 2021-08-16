@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v4.1.0](https://github.com/voxpupuli/puppet-bird/tree/v4.1.0) (2021-08-16)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-bird/compare/v4.0.0...v4.1.0)
+
+**Implemented enhancements:**
+
+- Implement a hash param to configure snippets via hiera [\#75](https://github.com/voxpupuli/puppet-bird/pull/75) ([bastelfreak](https://github.com/bastelfreak))
+- Implement purging of unmanaged snippets [\#71](https://github.com/voxpupuli/puppet-bird/pull/71) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- cleanup syntax in init.pp [\#72](https://github.com/voxpupuli/puppet-bird/pull/72) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v4.0.0](https://github.com/voxpupuli/puppet-bird/tree/v4.0.0) (2021-07-19)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-bird/compare/v3.1.1...v4.0.0)
