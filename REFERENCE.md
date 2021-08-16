@@ -67,6 +67,7 @@ The following parameters are available in the `bird` class:
 * [`v4_path`](#v4_path)
 * [`v6_path`](#v6_path)
 * [`purge_unmanaged_snippets`](#purge_unmanaged_snippets)
+* [`snippets`](#snippets)
 
 ##### <a name="config_file_v4"></a>`config_file_v4`
 
@@ -240,7 +241,15 @@ Data type: `Boolean`
 
 The module won't purge unmanaged snippets by default. By enabling this, Puppet will purge all of them except the ones created with bird::snippet()
 
-Default value: ``true``
+Default value: ``false``
+
+##### <a name="snippets"></a>`snippets`
+
+Data type: `Hash[String[1], Hash]`
+
+Hash of resources for bird::snippet()
+
+Default value: `{}`
 
 ## Defined types
 

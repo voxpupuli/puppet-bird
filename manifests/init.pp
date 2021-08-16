@@ -73,6 +73,9 @@
 # @param purge_unmanaged_snippets
 #   The module won't purge unmanaged snippets by default. By enabling this, Puppet will purge all of them except the ones created with bird::snippet()
 #
+# @param snippets
+#   Hash of resources for bird::snippet()
+#
 # @example IPv4 only
 #   class { 'bird':
 #     config_file_v4 => 'puppet:///modules/bgp/ldn/bird.conf',
@@ -109,6 +112,7 @@ class bird (
   Optional[String[1]] $config_content_v4        = undef,
   Optional[String[1]] $config_content_v6        = undef,
   Boolean $purge_unmanaged_snippets             = false,
+  Hash[String[1], Hash] $snippets               = {},
 ) {
   if $purge_unmanaged_snippets {
     $snippet_hash = { 'recurse' => true, 'purge' => true }
@@ -241,6 +245,12 @@ class bird (
           *       => $snippet_hash,
         }
       }
+    }
+  }
+
+  $snippets.each |String[1] $snippet_title, Hash $snippet_params| {
+    bird::snippet { $snippet_title:
+      * => $snippet_params,
     }
   }
 }

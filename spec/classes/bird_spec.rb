@@ -282,6 +282,31 @@ describe 'bird' do
 
         it { is_expected.to compile.with_all_deps }
       end
+      context 'with snippets as hash' do
+        let(:params) do
+          {
+            config_file_v4: 'puppet:///modules/fooboozoo',
+            enable_v6:      false,
+            manage_conf: true,
+            manage_service: true,
+            snippets: {
+              bla: {
+                content: 'testcontent'
+              }
+            }
+          }
+        end
+
+        it { is_expected.not_to contain_yumrepo('bird') }
+        it { is_expected.not_to contain_package('bird').that_requires('Yumrepo[bird]') }
+        it { is_expected.to compile.with_all_deps }
+        it { is_expected.to contain_bird__snippet('bla') }
+        if %w[Archlinux CentOS].include? facts[:os]['name']
+          it { is_expected.to contain_file('/etc/snippets/bla') }
+        else
+          it { is_expected.to contain_file('/etc/bird/snippets/bla') }
+        end
+      end
     end
   end
 end
