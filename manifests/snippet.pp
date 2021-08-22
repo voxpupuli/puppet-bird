@@ -31,12 +31,12 @@ define bird::snippet (
   if $manage_v6 {
     $additional_config_path = $bird::additional_config_path_v6
     $validate_cmd = "${bird::v6_path} -p -c ${bird::config_path_v6}"
-    $require = File[$bird::config_path_v6]
+    $require_filepath = File[$bird::config_path_v6]
     $daemon_name = Service[$bird::daemon_name_v6]
   } else {
     $additional_config_path = $bird::additional_config_path_v4
     $validate_cmd = "${bird::v4_path} -p -c ${bird::config_path_v4}"
-    $require = File[$bird::config_path_v4]
+    $require_filepath = File[$bird::config_path_v4]
     $daemon_name = Service[$bird::daemon_name_v4]
   }
   $filepath = "${additional_config_path}/${title}"
@@ -56,7 +56,7 @@ define bird::snippet (
     group        => 'root',
     mode         => '0644',
     validate_cmd => $_validate_cmd,
-    require      => $require,
+    require      => $require_filepath,
   }
   if $bird::manage_service {
     File[$filepath] ~> $daemon_name
