@@ -75,3 +75,12 @@ jobs:
         env:
           BEAKER_PUPPET_COLLECTION: ${{ matrix.puppet.collection }}
           BEAKER_setfile: ${{ matrix.setfile.value }}
+
+  tests:
+    needs:
+      - unit
+      - acceptance
+    runs-on: ubuntu-latest
+    name: Test suite
+    steps:
+      - run: echo Test suite completed
