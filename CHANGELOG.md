@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v4.1.1](https://github.com/voxpupuli/puppet-bird/tree/v4.1.1) (2021-08-26)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-bird/compare/v4.1.0...v4.1.1)
+
+**Fixed bugs:**
+
+- allow `require` metaparam for bird::snippet [\#76](https://github.com/voxpupuli/puppet-bird/pull/76) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- Allow stdlib 8.0.0 [\#77](https://github.com/voxpupuli/puppet-bird/pull/77) ([smortex](https://github.com/smortex))
+
 ## [v4.1.0](https://github.com/voxpupuli/puppet-bird/tree/v4.1.0) (2021-08-16)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-bird/compare/v4.0.0...v4.1.0)
