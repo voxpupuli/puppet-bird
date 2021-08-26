@@ -1,15 +1,4 @@
 ---
-.travis.yml:
-  secure: "WqGXpNFu/SmCCOHvqBEZBUsQI2k9VKyiub4wyxA9skj/O04O39jizE7sDDkYMksHskAPg++yPqADg4YROIK2PEjg2DXh5/qyZHII2aQfcTLoqOhvn3xCXPqXwNKxj2uVkb4t1RP1UnJ//ItcaRktzaA01XSd3aat8C4tQdlgWhI="
-  docker_sets:
-    - set: centos6-64
-    - set: centos7-64
-    - set: debian8-64
-    - set: debian9-64
-    - set: debian10-64
-    - set: ubuntu1604-64
-    - set: ubuntu1804-64
-    - set: ubuntu2004-64
 Gemfile:
   optional:
     ':test':
