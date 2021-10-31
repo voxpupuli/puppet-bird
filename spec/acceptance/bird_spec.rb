@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper_acceptance'
 
 describe 'bird class' do
@@ -32,6 +34,7 @@ describe 'bird class' do
 
     describe service('bird6') do
       it { is_expected.to be_enabled }
+
       if fact('os.family') == 'RedHat'
         it { is_expected.not_to be_running }
       else
