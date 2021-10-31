@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'bird::snippet' do
@@ -36,6 +38,7 @@ describe 'bird::snippet' do
         end
 
         it { is_expected.to compile.with_all_deps }
+
         if %w[Archlinux CentOS].include?(os_facts[:os]['name'])
           it { is_expected.not_to contain_file('/etc/bird/snippets').with_ensure('directory') }
           it { is_expected.not_to contain_file('/etc/bird/snippets/AS1234').with_ensure('file') }

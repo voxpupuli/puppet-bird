@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'bird' do
@@ -31,7 +33,7 @@ describe 'bird' do
         let(:params) do
           {
             config_file_v4: 'puppet:///modules/fooboozoo',
-            enable_v6:      false,
+            enable_v6: false,
             manage_conf: true,
             manage_service: true
           }
@@ -41,41 +43,42 @@ describe 'bird' do
         it { is_expected.not_to contain_package('bird').that_requires('Yumrepo[bird]') }
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_package('bird') }
+
         it {
-          is_expected.to contain_service('bird').with(
-            'ensure'     => 'running',
-            'pattern'    => 'bird',
+          expect(subject).to contain_service('bird').with(
+            'ensure' => 'running',
+            'pattern' => 'bird',
             'hasrestart' => 'false',
-            'restart'    => '/usr/sbin/birdc configure'
+            'restart' => '/usr/sbin/birdc configure'
           )
         }
 
         context 'with service (v4) and rc disabled' do
           let(:params) do
             {
-              config_file_v4:    'puppet:///modules/fooboozoo',
+              config_file_v4: 'puppet:///modules/fooboozoo',
               service_v4_ensure: 'stopped',
               manage_service: true
             }
           end
 
           it {
-            is_expected.to contain_service('bird').with(
-              'ensure'     => 'stopped',
-              'enable'     => 'false',
-              'pattern'    => 'bird',
+            expect(subject).to contain_service('bird').with(
+              'ensure' => 'stopped',
+              'enable' => 'false',
+              'pattern' => 'bird',
               'hasrestart' => 'false',
-              'restart'    => '/usr/sbin/birdc configure'
+              'restart' => '/usr/sbin/birdc configure'
             )
           }
         end
 
         it {
-          is_expected.to contain_file(filepath).with(
+          expect(subject).to contain_file(filepath).with(
             'source' => 'puppet:///modules/fooboozoo',
-            'owner'  => 'root',
-            'group'  => 'root',
-            'mode'   => '0644'
+            'owner' => 'root',
+            'group' => 'root',
+            'mode' => '0644'
           )
         }
 
@@ -91,8 +94,8 @@ describe 'bird' do
         let(:params) do
           {
             config_file_v4: 'puppet:///modules/fooboozoo',
-            enable_v6:       true,
-            config_file_v6:  'puppet:///modules/fooboozoo6',
+            enable_v6: true,
+            config_file_v6: 'puppet:///modules/fooboozoo6',
             manage_conf: true,
             manage_service: true,
             v6_path: '/usr/sbin/bird6'
@@ -100,44 +103,45 @@ describe 'bird' do
         end
 
         it { is_expected.to compile.with_all_deps }
+
         if facts[:os]['family'] == 'RedHat'
           it { is_expected.to contain_package('bird6') }
         else
           it { is_expected.to contain_package('bird') }
         end
         it {
-          is_expected.to contain_service('bird').with(
-            'ensure'     => 'running',
-            'pattern'    => 'bird',
+          expect(subject).to contain_service('bird').with(
+            'ensure' => 'running',
+            'pattern' => 'bird',
             'hasrestart' => 'false',
-            'restart'    => '/usr/sbin/birdc configure'
+            'restart' => '/usr/sbin/birdc configure'
           )
         }
 
         it {
-          is_expected.to contain_file(filepath).with(
+          expect(subject).to contain_file(filepath).with(
             'source' => 'puppet:///modules/fooboozoo',
-            'owner'  => 'root',
-            'group'  => 'root',
-            'mode'   => '0644'
+            'owner' => 'root',
+            'group' => 'root',
+            'mode' => '0644'
           ).that_notifies('Service[bird]')
         }
 
         it {
-          is_expected.to contain_service('bird6').with(
-            'ensure'     => 'running',
-            'pattern'    => 'bird6',
+          expect(subject).to contain_service('bird6').with(
+            'ensure' => 'running',
+            'pattern' => 'bird6',
             'hasrestart' => 'false',
-            'restart'    => '/usr/sbin/birdc6 configure'
+            'restart' => '/usr/sbin/birdc6 configure'
           )
         }
 
         it {
-          is_expected.to contain_file(filepathv6).with(
+          expect(subject).to contain_file(filepathv6).with(
             'source' => 'puppet:///modules/fooboozoo6',
-            'owner'  => 'root',
-            'group'  => 'root',
-            'mode'   => '0644'
+            'owner' => 'root',
+            'group' => 'root',
+            'mode' => '0644'
           ).that_notifies('Service[bird6]')
         }
 
@@ -146,10 +150,10 @@ describe 'bird' do
             {
               service_v6_enable: false,
               service_v4_enable: false,
-              config_file_v4:    'puppet:///modules/fooboozoo',
-              manage_service:   true,
-              enable_v6:         true,
-              config_file_v6:    'puppet:///modules/fooboozoo6',
+              config_file_v4: 'puppet:///modules/fooboozoo',
+              manage_service: true,
+              enable_v6: true,
+              config_file_v6: 'puppet:///modules/fooboozoo6',
               service_v6_ensure: 'stopped',
               service_v4_ensure: 'stopped'
             }
@@ -158,21 +162,22 @@ describe 'bird' do
           it { is_expected.to compile.with_all_deps }
 
           it {
-            is_expected.to contain_service('bird').with(
-              'ensure'     => 'stopped',
-              'enable'     => 'false',
-              'pattern'    => 'bird',
+            expect(subject).to contain_service('bird').with(
+              'ensure' => 'stopped',
+              'enable' => 'false',
+              'pattern' => 'bird',
               'hasrestart' => 'false',
-              'restart'    => '/usr/sbin/birdc configure'
+              'restart' => '/usr/sbin/birdc configure'
             )
           }
+
           it {
-            is_expected.to contain_service('bird6').with(
-              'ensure'     => 'stopped',
-              'enable'     => 'false',
-              'pattern'    => 'bird6',
+            expect(subject).to contain_service('bird6').with(
+              'ensure' => 'stopped',
+              'enable' => 'false',
+              'pattern' => 'bird6',
               'hasrestart' => 'false',
-              'restart'    => '/usr/sbin/birdc6 configure'
+              'restart' => '/usr/sbin/birdc6 configure'
             )
           }
         end
@@ -180,7 +185,7 @@ describe 'bird' do
         context 'without configuration file (IPv4/IPv6)' do
           let(:params) do
             {
-              enable_v6:   true,
+              enable_v6: true,
               manage_conf: false
             }
           end
@@ -189,6 +194,7 @@ describe 'bird' do
           it { is_expected.not_to contain_file(filepath) }
           it { is_expected.not_to contain_file(filepathv6) }
         end
+
         context 'with manage_repo set to true' do
           let(:params) do
             {
@@ -200,7 +206,8 @@ describe 'bird' do
           it { is_expected.to contain_yumrepo('bird') }
           it { is_expected.to contain_package('bird') }
         end
-        context 'with manage_repo set to true' do
+
+        context 'with manage_conf set to true' do
           let(:params) do
             {
               config_content_v4: 'awesome bird configuration is expected here',
@@ -212,23 +219,26 @@ describe 'bird' do
           end
 
           it { is_expected.to compile.with_all_deps }
+
           it {
-            is_expected.to contain_file(filepath).with(
+            expect(subject).to contain_file(filepath).with(
               'content' => 'awesome bird configuration is expected here',
-              'owner'  => 'root',
-              'group'  => 'root',
-              'mode'   => '0644'
+              'owner' => 'root',
+              'group' => 'root',
+              'mode' => '0644'
             )
           }
+
           it {
-            is_expected.to contain_file(filepathv6).with(
+            expect(subject).to contain_file(filepathv6).with(
               'content' => 'awesome bird configuration is expected here',
-              'owner'  => 'root',
-              'group'  => 'root',
-              'mode'   => '0644'
+              'owner' => 'root',
+              'group' => 'root',
+              'mode' => '0644'
             )
           }
         end
+
         context 'with config_file_v4 and config_template_v4' do
           let(:params) do
             {
@@ -240,6 +250,7 @@ describe 'bird' do
 
           it { is_expected.to compile.and_raise_error(%r{either config_file_v4 or config_template_v4 or config_content_v4 parameter must be set}) }
         end
+
         context 'with config_file_v4 and config_content_v4' do
           let(:params) do
             {
@@ -251,6 +262,7 @@ describe 'bird' do
 
           it { is_expected.to compile.and_raise_error(%r{either config_file_v4 or config_template_v4 or config_content_v4 parameter must be set}) }
         end
+
         context 'with config_file_v6 and config_template_v6' do
           let(:params) do
             {
@@ -266,12 +278,13 @@ describe 'bird' do
           it { is_expected.to compile.and_raise_error(msg) }
         end
       end
+
       context 'with IPv4 and IPv6 and managed services', if: facts[:os]['name'] != 'Archlinux' do
         let(:params) do
           {
             config_file_v4: 'puppet:///modules/fooboozoo',
-            enable_v6:       true,
-            config_file_v6:  'puppet:///modules/fooboozoo6',
+            enable_v6: true,
+            config_file_v6: 'puppet:///modules/fooboozoo6',
             manage_conf: true,
             manage_service: true,
             service_v6_enable: true,
@@ -282,11 +295,12 @@ describe 'bird' do
 
         it { is_expected.to compile.with_all_deps }
       end
+
       context 'with snippets as hash' do
         let(:params) do
           {
             config_file_v4: 'puppet:///modules/fooboozoo',
-            enable_v6:      false,
+            enable_v6: false,
             manage_conf: true,
             manage_service: true,
             snippets: {
@@ -301,6 +315,7 @@ describe 'bird' do
         it { is_expected.not_to contain_package('bird').that_requires('Yumrepo[bird]') }
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_bird__snippet('bla') }
+
         if %w[Archlinux CentOS].include? facts[:os]['name']
           it { is_expected.to contain_file('/etc/snippets/bla') }
         else
