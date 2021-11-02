@@ -9,6 +9,14 @@
 #   Bird configuration template for IPv4. This value is a template source, it
 #   will be passed into the template() function.
 #
+# @param config_epp_v4
+#   Bird configuration template for IPv4. This value is an epp source, it
+#   will be passed into the epp() function.
+#
+# @param config_epp_v4_par
+#   Bird configuration template data for IPv4. This value is an epp data source
+#   will be passed into the epp() function.
+#
 # @param daemon_name_v6
 #   The service name used by puppet resource
 #
@@ -55,6 +63,14 @@
 #   Bird configuration template for IPv6. This value is a template source, it
 #   will be passed into the template() function.
 #
+# @param config_epp_v6
+#   Bird configuration template for IPv6. This value is a epp source, it
+#   will be passed into the epp() function.
+#
+# @param config_epp_v6_par
+#   Bird configuration template data for IPv4. This value is an epp data source
+#   will be passed into the epp() function.
+#
 # @param manage_repo
 #   Add the upstream repository from CZ.NIC. This is currently only supported for CentOS 7
 #
@@ -99,6 +115,8 @@ class bird (
   String[1] $package_name_v4                    = 'bird',
   Optional[Stdlib::Filesource] $config_file_v4  = undef,
   Optional[String[1]] $config_template_v4       = undef,
+  Optional[String[1]] $config_epp_v4            = undef,
+  Hash[String[1], String[1]] $config_epp_v4_par = {},
   Boolean $manage_conf                          = false,
   Boolean $manage_service                       = false,
   Stdlib::Ensure::Service $service_v6_ensure    = 'running',
@@ -108,6 +126,8 @@ class bird (
   String[1] $daemon_name_v6                     = 'bird6',
   Optional[Stdlib::Filesource] $config_file_v6  = undef,
   Optional[String[1]] $config_template_v6       = undef,
+  Optional[String[1]] $config_epp_v6            = undef,
+  Hash[String[1], String[1]] $config_epp_v6_par = {},
   Boolean $manage_repo                          = false,
   Optional[String[1]] $config_content_v4        = undef,
   Optional[String[1]] $config_content_v6        = undef,
@@ -144,16 +164,20 @@ class bird (
   }
 
   if $manage_conf {
-    if ($config_file_v4 and $config_template_v4) or ($config_file_v4 and $config_content_v4) or ( $config_template_v4 and $config_content_v4) {
-      fail("either config_file_v4 or config_template_v4 or config_content_v4 parameter must be set (config_file_v4: ${config_file_v4}, config_template_v4: ${config_template_v4}, config_content_v4: ${config_content_v4})")
+    $path_params_v4 = [$config_file_v4, $config_template_v4, $config_content_v4, $config_epp_v4]
+    $path_count_v4 = $path_params_v4.reduce(0)|$value, $item| { $item ? { undef => $value, default => $value + 1 } }
+    if $path_count_v4 > 1 {
+      fail("either config_file_v4 or config_template_v4 or config_epp_v4 or config_content_v4 parameter must be set (config_file_v4: ${config_file_v4}, config_template_v4: ${config_template_v4}, config_epp_v4: ${config_epp_v4}, config_content_v4: ${config_content_v4})")
     }
 
     if $config_file_v4 {
       $config_file_v4_content = undef
     } elsif $config_content_v4 {
       $config_file_v4_content = $config_content_v4
-    } else {
+    } elsif $config_template_v4 {
       $config_file_v4_content = template($config_template_v4)
+    } else {
+      $config_file_v4_content = epp($config_epp_v4, $config_epp_v4_par)
     }
 
     file { $config_path_v4:
@@ -205,16 +229,20 @@ class bird (
     }
 
     if $manage_conf {
-      if ($config_file_v6 and $config_template_v6) or ($config_file_v6 and $config_content_v6) or ( $config_template_v6 and $config_content_v6) {
-        fail("either config_file_v6 or config_template_v6 or config_content_v6 parameter must be set (config_file_v6: ${config_file_v6}, config_template_v6: ${config_template_v6}), config_content_v6: ${config_content_v6}")
+      $path_params_v6 = [$config_file_v6, $config_template_v6, $config_content_v6, $config_epp_v6]
+      $path_count_v6 = $path_params_v6.reduce(0)|$value, $item| { $item ? { undef => $value, default => $value + 1 } }
+      if $path_count_v6 > 1 {
+        fail("either config_file_v6 or config_template_v6 or config_epp_v6 or config_content_v6 parameter must be set (config_file_v6: ${config_file_v6}, config_template_v6: ${config_template_v6}), config_epp_v6: ${config_epp_v6}), config_content_v6: ${config_content_v6}")
       }
 
       if $config_file_v6 {
         $config_file_v6_content = undef
       } elsif $config_content_v6 {
         $config_file_v6_content = $config_content_v6
-      } else {
+      } elsif $config_file_v6_content {
         $config_file_v6_content = template($config_template_v6)
+      } else {
+        $config_file_v6_content = epp($config_epp_v6, $config_epp_v6_par)
       }
 
       assert_type(Stdlib::Absolutepath, $v6_path)
