@@ -18,7 +18,7 @@
 define bird::snippet (
   Boolean $manage_v6 = false,
   Boolean $validate = true,
-  Optional[String[1]] $content = undef,
+  Optional[Variant[String[1], Sensitive[String[1]]]] $content = undef,
   Optional[Stdlib::Filesource] $source = undef,
 ) {
   include bird
