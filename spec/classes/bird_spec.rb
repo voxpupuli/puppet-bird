@@ -19,7 +19,7 @@ describe 'bird' do
     msg = if facts[:os]['name'] == 'Archlinux'
             %r{The bird version in Archlinux does not provide a seperate daemon for IPv6. You cannot explicitly enable it. The default daemon already has IPv6 support}
           else
-            %r{either config_file_v6 or config_template_v6 or config_content_v6 parameter must be set}
+            %r{either config_file_v6 or config_template_v6 or config_epp_v6 or config_content_v6 parameter must be set}
           end
 
     context "on #{os}" do
@@ -248,7 +248,7 @@ describe 'bird' do
             }
           end
 
-          it { is_expected.to compile.and_raise_error(%r{either config_file_v4 or config_template_v4 or config_content_v4 parameter must be set}) }
+          it { is_expected.to compile.and_raise_error(%r{either config_file_v4 or config_template_v4 or config_epp_v4 or config_content_v4 parameter must be set}) }
         end
 
         context 'with config_file_v4 and config_content_v4' do
@@ -260,7 +260,7 @@ describe 'bird' do
             }
           end
 
-          it { is_expected.to compile.and_raise_error(%r{either config_file_v4 or config_template_v4 or config_content_v4 parameter must be set}) }
+          it { is_expected.to compile.and_raise_error(%r{either config_file_v4 or config_template_v4 or config_epp_v4 or config_content_v4 parameter must be set}) }
         end
 
         context 'with config_file_v6 and config_template_v6' do
