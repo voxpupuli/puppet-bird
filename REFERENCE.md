@@ -46,6 +46,8 @@ The following parameters are available in the `bird` class:
 
 * [`config_file_v4`](#config_file_v4)
 * [`config_template_v4`](#config_template_v4)
+* [`config_epp_v4`](#config_epp_v4)
+* [`config_epp_v4_par`](#config_epp_v4_par)
 * [`daemon_name_v6`](#daemon_name_v6)
 * [`package_name_v6`](#package_name_v6)
 * [`daemon_name_v4`](#daemon_name_v4)
@@ -61,6 +63,8 @@ The following parameters are available in the `bird` class:
 * [`service_v4_enable`](#service_v4_enable)
 * [`config_file_v6`](#config_file_v6)
 * [`config_template_v6`](#config_template_v6)
+* [`config_epp_v6`](#config_epp_v6)
+* [`config_epp_v6_par`](#config_epp_v6_par)
 * [`manage_repo`](#manage_repo)
 * [`config_content_v4`](#config_content_v4)
 * [`config_content_v6`](#config_content_v6)
@@ -85,6 +89,24 @@ Bird configuration template for IPv4. This value is a template source, it
 will be passed into the template() function.
 
 Default value: ``undef``
+
+##### <a name="config_epp_v4"></a>`config_epp_v4`
+
+Data type: `Optional[String[1]]`
+
+Bird configuration template for IPv4. This value is an epp source, it
+will be passed into the epp() function.
+
+Default value: ``undef``
+
+##### <a name="config_epp_v4_par"></a>`config_epp_v4_par`
+
+Data type: `Hash[String[1], String[1]]`
+
+Bird configuration template data for IPv4. This value is an epp data source
+will be passed into the epp() function.
+
+Default value: `{}`
 
 ##### <a name="daemon_name_v6"></a>`daemon_name_v6`
 
@@ -198,6 +220,24 @@ Bird configuration template for IPv6. This value is a template source, it
 will be passed into the template() function.
 
 Default value: ``undef``
+
+##### <a name="config_epp_v6"></a>`config_epp_v6`
+
+Data type: `Optional[String[1]]`
+
+Bird configuration template for IPv6. This value is a epp source, it
+will be passed into the epp() function.
+
+Default value: ``undef``
+
+##### <a name="config_epp_v6_par"></a>`config_epp_v6_par`
+
+Data type: `Hash[String[1], String[1]]`
+
+Bird configuration template data for IPv4. This value is an epp data source
+will be passed into the epp() function.
+
+Default value: `{}`
 
 ##### <a name="manage_repo"></a>`manage_repo`
 
