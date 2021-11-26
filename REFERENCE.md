@@ -47,7 +47,7 @@ The following parameters are available in the `bird` class:
 * [`config_file_v4`](#config_file_v4)
 * [`config_template_v4`](#config_template_v4)
 * [`config_epp_v4`](#config_epp_v4)
-* [`config_epp_v4_par`](#config_epp_v4_par)
+* [`config_epp_v4_data`](#config_epp_v4_data)
 * [`daemon_name_v6`](#daemon_name_v6)
 * [`package_name_v6`](#package_name_v6)
 * [`daemon_name_v4`](#daemon_name_v4)
@@ -64,7 +64,7 @@ The following parameters are available in the `bird` class:
 * [`config_file_v6`](#config_file_v6)
 * [`config_template_v6`](#config_template_v6)
 * [`config_epp_v6`](#config_epp_v6)
-* [`config_epp_v6_par`](#config_epp_v6_par)
+* [`config_epp_v6_data`](#config_epp_v6_data)
 * [`manage_repo`](#manage_repo)
 * [`config_content_v4`](#config_content_v4)
 * [`config_content_v6`](#config_content_v6)
@@ -99,9 +99,9 @@ will be passed into the epp() function.
 
 Default value: ``undef``
 
-##### <a name="config_epp_v4_par"></a>`config_epp_v4_par`
+##### <a name="config_epp_v4_data"></a>`config_epp_v4_data`
 
-Data type: `Hash[String[1], String[1]]`
+Data type: `Hash[String[1], Any]`
 
 Bird configuration template data for IPv4. This value is an epp data source
 will be passed into the epp() function.
@@ -230,9 +230,9 @@ will be passed into the epp() function.
 
 Default value: ``undef``
 
-##### <a name="config_epp_v6_par"></a>`config_epp_v6_par`
+##### <a name="config_epp_v6_data"></a>`config_epp_v6_data`
 
-Data type: `Hash[String[1], String[1]]`
+Data type: `Hash[String[1], Any]`
 
 Bird configuration template data for IPv4. This value is an epp data source
 will be passed into the epp() function.
@@ -336,7 +336,7 @@ Default value: ``true``
 
 ##### <a name="content"></a>`content`
 
-Data type: `Optional[String[1]]`
+Data type: `Optional[Variant[String[1], Sensitive[String[1]]]]`
 
 The content of the snippet. You cannot provide this in combination with $source.
 

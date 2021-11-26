@@ -13,7 +13,7 @@
 #   Bird configuration template for IPv4. This value is an epp source, it
 #   will be passed into the epp() function.
 #
-# @param config_epp_v4_par
+# @param config_epp_v4_data
 #   Bird configuration template data for IPv4. This value is an epp data source
 #   will be passed into the epp() function.
 #
@@ -67,7 +67,7 @@
 #   Bird configuration template for IPv6. This value is a epp source, it
 #   will be passed into the epp() function.
 #
-# @param config_epp_v6_par
+# @param config_epp_v6_data
 #   Bird configuration template data for IPv4. This value is an epp data source
 #   will be passed into the epp() function.
 #
@@ -177,7 +177,7 @@ class bird (
     } elsif $config_template_v4 {
       $config_file_v4_content = template($config_template_v4)
     } else {
-      $config_file_v4_content = epp($config_epp_v4, $config_epp_v4_par)
+      $config_file_v4_content = epp($config_epp_v4, $config_epp_v4_data)
     }
 
     file { $config_path_v4:
@@ -242,7 +242,7 @@ class bird (
       } elsif $config_file_v6_content {
         $config_file_v6_content = template($config_template_v6)
       } else {
-        $config_file_v6_content = epp($config_epp_v6, $config_epp_v6_par)
+        $config_file_v6_content = epp($config_epp_v6, $config_epp_v6_data)
       }
 
       assert_type(Stdlib::Absolutepath, $v6_path)
