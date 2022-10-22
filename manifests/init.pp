@@ -239,7 +239,7 @@ class bird (
         $config_file_v6_content = undef
       } elsif $config_content_v6 {
         $config_file_v6_content = $config_content_v6
-      } elsif $config_file_v6_content {
+      } elsif $config_template_v6 {
         $config_file_v6_content = template($config_template_v6)
       } else {
         $config_file_v6_content = epp($config_epp_v6, $config_epp_v6_data)
