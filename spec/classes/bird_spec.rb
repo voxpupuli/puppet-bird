@@ -277,6 +277,41 @@ describe 'bird' do
 
           it { is_expected.to compile.and_raise_error(msg) }
         end
+
+        context 'with config_epp_v4 and config_epp_v6' do
+          let(:params) do
+            {
+              enable_v6: true,
+              config_epp_v4: 'bird/test-fixture.epp',
+              config_epp_v4_data: { key: 'awesome bird configuration is expected here' },
+              config_epp_v6: 'bird/test-fixture.epp',
+              config_epp_v6_data: { key: 'awesome bird configuration is expected here' },
+              manage_conf: true,
+              v4_path: '/path/to/file',
+              v6_path: '/path/to/file',
+            }
+          end
+
+          it { is_expected.to compile.with_all_deps }
+
+          it {
+            expect(subject).to contain_file(filepath).with(
+              'content' => "awesome bird configuration is expected here\n",
+              'owner' => 'root',
+              'group' => 'root',
+              'mode' => '0644'
+            )
+          }
+
+          it {
+            expect(subject).to contain_file(filepathv6).with(
+              'content' => "awesome bird configuration is expected here\n",
+              'owner' => 'root',
+              'group' => 'root',
+              'mode' => '0644'
+            )
+          }
+        end
       end
 
       context 'with IPv4 and IPv6 and managed services', if: facts[:os]['name'] != 'Archlinux' do
