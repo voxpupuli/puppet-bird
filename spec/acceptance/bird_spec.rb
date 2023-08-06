@@ -10,7 +10,7 @@ describe 'bird class' do
       class { 'bird':
         manage_service    => true,
         service_v4_enable => true,
-        enable_v6         => true,
+        enable_v6         => $facts['os']['family'] != 'Archlinux',
         service_v6_enable => true,
         service_v6_ensure => bool2str($facts['os']['family'] == 'RedHat', 'stopped', 'running'),
       }
@@ -32,13 +32,15 @@ describe 'bird class' do
       it { is_expected.to be_running }
     end
 
-    describe service('bird6') do
-      it { is_expected.to be_enabled }
+    if fact('os.family') != 'Archlinux'
+      describe service('bird6') do
+        it { is_expected.to be_enabled }
 
-      if fact('os.family') == 'RedHat'
-        it { is_expected.not_to be_running }
-      else
-        it { is_expected.to be_running }
+        if fact('os.family') == 'RedHat'
+          it { is_expected.not_to be_running }
+        else
+          it { is_expected.to be_running }
+        end
       end
     end
   end
