@@ -150,7 +150,7 @@ class bird (
     Yumrepo['bird'] -> Package <| name == $package_name_v4 or name == $package_name_v6 |>
   }
 
-  ensure_packages([$package_name_v4], { 'ensure' => 'present' })
+  stdlib::ensure_packages([$package_name_v4], { 'ensure' => 'present' })
 
   if $manage_service {
     service { $daemon_name_v4:
@@ -214,7 +214,7 @@ class bird (
       fail('The bird version in Archlinux does not provide a seperate daemon for IPv6. You cannot explicitly enable it. The default daemon already has IPv6 support')
     }
 
-    ensure_packages([$package_name_v6], { 'ensure' => 'present' })
+    stdlib::ensure_packages([$package_name_v6], { 'ensure' => 'present' })
 
     if $manage_service {
       service { $daemon_name_v6:
