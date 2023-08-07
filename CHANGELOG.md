@@ -4,6 +4,33 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v5.0.0](https://github.com/voxpupuli/puppet-bird/tree/v5.0.0) (2023-08-06)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-bird/compare/v4.2.0...v5.0.0)
+
+**Breaking changes:**
+
+- Fix usage of deprecated ensure\_packages / require puppetlabs/stdlib 9 [\#98](https://github.com/voxpupuli/puppet-bird/pull/98) ([smortex](https://github.com/smortex))
+- Drop support for Debian 9 \(EOL\) [\#97](https://github.com/voxpupuli/puppet-bird/pull/97) ([smortex](https://github.com/smortex))
+- Drop Puppet 6 support [\#93](https://github.com/voxpupuli/puppet-bird/pull/93) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- Add Ubuntu 22.04 support [\#99](https://github.com/voxpupuli/puppet-bird/pull/99) ([bastelfreak](https://github.com/bastelfreak))
+- Add Puppet 8 support [\#96](https://github.com/voxpupuli/puppet-bird/pull/96) ([bastelfreak](https://github.com/bastelfreak))
+- puppetlabs/stdlib: Allow 9.x [\#95](https://github.com/voxpupuli/puppet-bird/pull/95) ([bastelfreak](https://github.com/bastelfreak))
+- Allow Sensitive [\#86](https://github.com/voxpupuli/puppet-bird/pull/86) ([arjenz](https://github.com/arjenz))
+
+**Fixed bugs:**
+
+- fix typos in variable names [\#88](https://github.com/voxpupuli/puppet-bird/pull/88) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- Fix variable clobbering \[typo\] [\#91](https://github.com/voxpupuli/puppet-bird/pull/91) ([JohnHolmesII](https://github.com/JohnHolmesII))
+- cleanup .fixtures.yml [\#89](https://github.com/voxpupuli/puppet-bird/pull/89) ([bastelfreak](https://github.com/bastelfreak))
+- Right hand side for parameter hash can be anything [\#85](https://github.com/voxpupuli/puppet-bird/pull/85) ([arjenz](https://github.com/arjenz))
+
 ## [v4.2.0](https://github.com/voxpupuli/puppet-bird/tree/v4.2.0) (2021-11-05)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-bird/compare/v4.1.1...v4.2.0)
