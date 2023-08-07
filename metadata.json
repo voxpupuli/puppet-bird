@@ -1,6 +1,6 @@
 {
   "name": "puppet-bird",
-  "version": "5.0.0",
+  "version": "5.0.1-rc0",
   "author": "Vox Pupuli",
   "summary": "Puppet bird Module",
   "license": "GPL-3.0",
