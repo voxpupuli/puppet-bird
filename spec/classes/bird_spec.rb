@@ -35,7 +35,7 @@ describe 'bird' do
             config_file_v4: 'puppet:///modules/fooboozoo',
             enable_v6: false,
             manage_conf: true,
-            manage_service: true
+            manage_service: true,
           }
         end
 
@@ -49,7 +49,7 @@ describe 'bird' do
             'ensure' => 'running',
             'pattern' => 'bird',
             'hasrestart' => 'false',
-            'restart' => '/usr/sbin/birdc configure'
+            'restart' => '/usr/sbin/birdc configure',
           )
         }
 
@@ -58,7 +58,7 @@ describe 'bird' do
             {
               config_file_v4: 'puppet:///modules/fooboozoo',
               service_v4_ensure: 'stopped',
-              manage_service: true
+              manage_service: true,
             }
           end
 
@@ -68,7 +68,7 @@ describe 'bird' do
               'enable' => 'false',
               'pattern' => 'bird',
               'hasrestart' => 'false',
-              'restart' => '/usr/sbin/birdc configure'
+              'restart' => '/usr/sbin/birdc configure',
             )
           }
         end
@@ -78,7 +78,7 @@ describe 'bird' do
             'source' => 'puppet:///modules/fooboozoo',
             'owner' => 'root',
             'group' => 'root',
-            'mode' => '0644'
+            'mode' => '0644',
           )
         }
 
@@ -98,7 +98,7 @@ describe 'bird' do
             config_file_v6: 'puppet:///modules/fooboozoo6',
             manage_conf: true,
             manage_service: true,
-            v6_path: '/usr/sbin/bird6'
+            v6_path: '/usr/sbin/bird6',
           }
         end
 
@@ -114,7 +114,7 @@ describe 'bird' do
             'ensure' => 'running',
             'pattern' => 'bird',
             'hasrestart' => 'false',
-            'restart' => '/usr/sbin/birdc configure'
+            'restart' => '/usr/sbin/birdc configure',
           )
         }
 
@@ -123,7 +123,7 @@ describe 'bird' do
             'source' => 'puppet:///modules/fooboozoo',
             'owner' => 'root',
             'group' => 'root',
-            'mode' => '0644'
+            'mode' => '0644',
           ).that_notifies('Service[bird]')
         }
 
@@ -132,7 +132,7 @@ describe 'bird' do
             'ensure' => 'running',
             'pattern' => 'bird6',
             'hasrestart' => 'false',
-            'restart' => '/usr/sbin/birdc6 configure'
+            'restart' => '/usr/sbin/birdc6 configure',
           )
         }
 
@@ -141,7 +141,7 @@ describe 'bird' do
             'source' => 'puppet:///modules/fooboozoo6',
             'owner' => 'root',
             'group' => 'root',
-            'mode' => '0644'
+            'mode' => '0644',
           ).that_notifies('Service[bird6]')
         }
 
@@ -155,7 +155,7 @@ describe 'bird' do
               enable_v6: true,
               config_file_v6: 'puppet:///modules/fooboozoo6',
               service_v6_ensure: 'stopped',
-              service_v4_ensure: 'stopped'
+              service_v4_ensure: 'stopped',
             }
           end
 
@@ -167,7 +167,7 @@ describe 'bird' do
               'enable' => 'false',
               'pattern' => 'bird',
               'hasrestart' => 'false',
-              'restart' => '/usr/sbin/birdc configure'
+              'restart' => '/usr/sbin/birdc configure',
             )
           }
 
@@ -177,7 +177,7 @@ describe 'bird' do
               'enable' => 'false',
               'pattern' => 'bird6',
               'hasrestart' => 'false',
-              'restart' => '/usr/sbin/birdc6 configure'
+              'restart' => '/usr/sbin/birdc6 configure',
             )
           }
         end
@@ -186,7 +186,7 @@ describe 'bird' do
           let(:params) do
             {
               enable_v6: true,
-              manage_conf: false
+              manage_conf: false,
             }
           end
 
@@ -198,7 +198,7 @@ describe 'bird' do
         context 'with manage_repo set to true' do
           let(:params) do
             {
-              manage_repo: true
+              manage_repo: true,
             }
           end
 
@@ -214,7 +214,7 @@ describe 'bird' do
               config_content_v6: 'awesome bird configuration is expected here',
               enable_v6: true,
               manage_conf: true,
-              v6_path: '/usr/sbin/bird6'
+              v6_path: '/usr/sbin/bird6',
             }
           end
 
@@ -225,7 +225,7 @@ describe 'bird' do
               'content' => 'awesome bird configuration is expected here',
               'owner' => 'root',
               'group' => 'root',
-              'mode' => '0644'
+              'mode' => '0644',
             )
           }
 
@@ -234,7 +234,7 @@ describe 'bird' do
               'content' => 'awesome bird configuration is expected here',
               'owner' => 'root',
               'group' => 'root',
-              'mode' => '0644'
+              'mode' => '0644',
             )
           }
         end
@@ -244,7 +244,7 @@ describe 'bird' do
             {
               config_file_v4: '/path/to/file',
               config_template_v4: 'something',
-              manage_conf: true
+              manage_conf: true,
             }
           end
 
@@ -256,7 +256,7 @@ describe 'bird' do
             {
               config_file_v4: '/path/to/file',
               config_content_v4: 'content',
-              manage_conf: true
+              manage_conf: true,
             }
           end
 
@@ -271,7 +271,7 @@ describe 'bird' do
               config_template_v6: 'something',
               manage_conf: true,
               enable_v6: true,
-              v6_path: '/usr/sbin/bird6'
+              v6_path: '/usr/sbin/bird6',
             }
           end
 
@@ -299,7 +299,7 @@ describe 'bird' do
               'content' => "awesome bird configuration is expected here\n",
               'owner' => 'root',
               'group' => 'root',
-              'mode' => '0644'
+              'mode' => '0644',
             )
           }
 
@@ -308,7 +308,7 @@ describe 'bird' do
               'content' => "awesome bird configuration is expected here\n",
               'owner' => 'root',
               'group' => 'root',
-              'mode' => '0644'
+              'mode' => '0644',
             )
           }
         end
@@ -324,7 +324,7 @@ describe 'bird' do
             manage_service: true,
             service_v6_enable: true,
             service_v4_enable: true,
-            v6_path: '/usr/sbin/bird'
+            v6_path: '/usr/sbin/bird',
           }
         end
 
@@ -340,9 +340,9 @@ describe 'bird' do
             manage_service: true,
             snippets: {
               bla: {
-                content: 'testcontent'
-              }
-            }
+                content: 'testcontent',
+              },
+            },
           }
         end
 

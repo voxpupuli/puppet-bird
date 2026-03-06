@@ -22,7 +22,7 @@ describe 'bird::snippet' do
         let :params do
           {
             source: 'puppet:///something',
-            content: 'foobar'
+            content: 'foobar',
           }
         end
 
@@ -33,7 +33,7 @@ describe 'bird::snippet' do
         let(:title) { 'AS1234' }
         let :params do
           {
-            content: 'foobar'
+            content: 'foobar',
           }
         end
 
@@ -56,7 +56,7 @@ describe 'bird::snippet' do
         let(:title) { 'AS1234' }
         let :params do
           {
-            content: 'puppet:///something'
+            content: 'puppet:///something',
           }
         end
 
