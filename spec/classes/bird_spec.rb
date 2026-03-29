@@ -3,8 +3,8 @@
 require 'spec_helper'
 
 describe 'bird' do
-  on_supported_os.each do |os, facts|
-    case facts[:os]['family']
+  on_supported_os.each do |os, os_facts|
+    case os_facts[:os]['family']
     when 'RedHat'
       filepath   = '/etc/bird.conf'
       filepathv6 = '/etc/bird6.conf'
@@ -16,7 +16,7 @@ describe 'bird' do
       filepathv6 = '/etc/bird.conf'
     end
 
-    msg = if facts[:os]['name'] == 'Archlinux'
+    msg = if os_facts[:os]['name'] == 'Archlinux'
             %r{The bird version in Archlinux does not provide a seperate daemon for IPv6. You cannot explicitly enable it. The default daemon already has IPv6 support}
           else
             %r{either config_file_v6 or config_template_v6 or config_epp_v6 or config_content_v6 parameter must be set}
@@ -24,7 +24,7 @@ describe 'bird' do
 
     context "on #{os}" do
       let(:facts) do
-        facts
+        os_facts
       end
 
       it { is_expected.to compile.with_all_deps }
@@ -90,7 +90,7 @@ describe 'bird' do
         end
       end
 
-      context 'with IPv4 and IPv6', if: facts[:os]['name'] != 'Archlinux' do
+      context 'with IPv4 and IPv6', if: os_facts[:os]['name'] != 'Archlinux' do
         let(:params) do
           {
             config_file_v4: 'puppet:///modules/fooboozoo',
@@ -104,7 +104,7 @@ describe 'bird' do
 
         it { is_expected.to compile.with_all_deps }
 
-        if facts[:os]['family'] == 'RedHat'
+        if os_facts[:os]['family'] == 'RedHat'
           it { is_expected.to contain_package('bird6') }
         else
           it { is_expected.to contain_package('bird') }
@@ -314,7 +314,7 @@ describe 'bird' do
         end
       end
 
-      context 'with IPv4 and IPv6 and managed services', if: facts[:os]['name'] != 'Archlinux' do
+      context 'with IPv4 and IPv6 and managed services', if: os_facts[:os]['name'] != 'Archlinux' do
         let(:params) do
           {
             config_file_v4: 'puppet:///modules/fooboozoo',
@@ -351,7 +351,7 @@ describe 'bird' do
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_bird__snippet('bla') }
 
-        if %w[Archlinux CentOS].include? facts[:os]['name']
+        if %w[Archlinux RedHat].include? os_facts[:os]['family']
           it { is_expected.to contain_file('/etc/snippets/bla') }
         else
           it { is_expected.to contain_file('/etc/bird/snippets/bla') }
