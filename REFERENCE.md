@@ -301,7 +301,7 @@ This is possible with this defined resource. Your bird config needs to contain a
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 bird::snippet { 'AS4242420181':
@@ -349,4 +349,3 @@ Data type: `Optional[Stdlib::Filesource]`
 the source of the snippet. You cannot provide this in combination with $content.
 
 Default value: `undef`
-
